@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="Chess.PlayerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:Chess.ViewModels"
+             xmlns:local="clr-namespace:Chess"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="BoardButtonStyle">
+            <Setter Property="Button.BorderThickness" Value="0"></Setter>
+            <Setter Property="Button.Background" Value="Transparent"></Setter>
+            <Setter Property="Button.Command" Value="{Binding ElementName=root, Path=DataContext.ReviveCommand}" />
+            <Setter Property="Button.CommandParameter" Value="{Binding}"></Setter>
+            <Setter Property="Button.IsEnabled" Value="False"></Setter>
+            <Setter Property="Button.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.Background" Value="#4169E1"></Setter>
+                </Trigger>
+                <Trigger Property="Button.IsPressed" Value="True">
+                    <Setter Property="Button.Background" Value="Green"></Setter>
+                </Trigger>
+                <DataTrigger Binding="{Binding PiecesAreSelectable, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" Value="True">
+                    <Setter Property="Button.IsEnabled" Value="True"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="root">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Width="200" Height="200">
+                <Border CornerRadius="200" BorderThickness="5" Background="#2D2D30">
+                    <Border.Style>
+                        <Style>
+                            <Setter Property="Border.BorderBrush" Value="#FFDF66"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Player.IsMyTurn, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" Value="True">
+                                    <Setter Property="Border.BorderBrush" Value="#FF3B9920"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <StackPanel>
+                        <Label FontWeight="Bold" Foreground="#FFDF66" FontSize="25" Margin="0 15 0 0" HorizontalAlignment="Center" Content="{Binding Player.UserName}"></Label>
+                        <StackPanel Background="#2D2D30" Margin="0 5 0 5" Width="170" Height="70">
+                            <Label Content="{Binding TimeRemaining, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" Foreground="#FFDF66" Margin="0 0 0 0" FontSize="45" HorizontalAlignment="Center"></Label>
+                        </StackPanel>
+                        <StackPanel Background="#2D2D30" Margin="0 5 0 5" Width="80" Height="30">
+                            <Label Content="{Binding Date, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" Foreground="#FFDF66" Margin="0 4 0 0" FontSize="10" HorizontalAlignment="Center"></Label>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <DockPanel Margin="10 10 10 10">
+                    <Grid DockPanel.Dock="Top" Background="#2D2D30" >
+                        <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="5 5 5 5" HorizontalAlignment="Center">Pieces</TextBlock>
+                    </Grid>
+                    <ItemsControl ItemsSource="{Binding Player.LostPieces}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel></WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource BoardButtonStyle}">
+                                    <Image Width="30" Height="30" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DockPanel>
+                <DockPanel Grid.Row="1" Margin="10 10 10 10">
+                    <Grid DockPanel.Dock="Top" Background="#2D2D30" >
+                        <TextBlock FontWeight="Bold" Foreground="#FFDF66" Margin="5 5 5 5" HorizontalAlignment="Center">Settings</TextBlock>
+                    </Grid>
+                    <StackPanel>
+                        <CheckBox Content="Show possible moves" IsChecked="{Binding Player.ShowPossibleMoves, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
