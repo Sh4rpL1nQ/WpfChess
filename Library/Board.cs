@@ -17,7 +17,7 @@ namespace Library
             Squares = new ObservableCollection<Square>();
         }
 
-        public bool IsKingChecked(Player turn)
+        public Piece IsKingChecked(Color turn)
         {
             var enemyPieces = GetAllPiecesByColor(GetOtherColor(turn));
             var playerKingSquare = Squares.FirstOrDefault(x => x.Point.Equals(GetKing(turn).Point));
@@ -28,11 +28,11 @@ namespace Library
                 {
                     var dir = enemyPiece.ChooseRightDirection(playerKingSquare.Point);
                     if (!IsPieceBlocking(enemyPiece, playerKingSquare, dir))
-                        return true;
+                        return enemyPiece;
                 }                   
             }               
 
-            return false;
+            return null;
         }
 
         public bool IsPieceBlocking(Piece piece, Square end, Point dir)
@@ -62,14 +62,14 @@ namespace Library
             return saveEndPiece;
         }
 
-        public Color GetOtherColor(Player player)
+        public Color GetOtherColor(Color player)
         {
-            return (player.Color == Color.White) ? Color.Black : Color.White;
+            return (player == Color.White) ? Color.Black : Color.White;
         }
 
-        public Piece GetKing(Player turn)
+        public Piece GetKing(Color turn)
         {
-            var allPieces = GetAllPiecesByColor(turn.Color);
+            var allPieces = GetAllPiecesByColor(turn);
 
             return allPieces.FirstOrDefault(x => x.PieceType == PieceType.King);
         }

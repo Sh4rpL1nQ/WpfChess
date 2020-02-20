@@ -143,23 +143,18 @@
                 <local:PlayerView DataContext="{Binding PlayerModel2}" Background="#FF787878" Margin="20 20 20 20" Grid.Row="1"></local:PlayerView>
             </Grid>
         </Grid>
-        <Grid Background="White" Opacity="0.5" Width="450" Height="450" HorizontalAlignment="Left" Margin="71 0 0 0">
-            <Grid.Style>
-                <Style>
-                    <Setter Property="Grid.Visibility" Value="Visible"></Setter>
+        <local:GameOverView Background="White" Opacity="0.5">
+            <local:GameOverView.Style>
+                <Style TargetType="local:GameOverView">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                    <Setter Property="DataContext" Value="{Binding GameOverModel}"></Setter>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding GameOver}" Value="{x:Null}">
-                            <Setter Property="Grid.Visibility" Value="Hidden"></Setter>
+                        <DataTrigger Binding="{Binding }" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Hidden"></Setter>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Grid.Style>
-            <StackPanel Orientation="Vertical">
-                <TextBlock Margin="0 50 0 0" Text="Congratulation" FontSize="30" FontWeight="Black" HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Margin="0 50 0 0" HorizontalAlignment="Center" Text="{Binding GameOver.Player.UserName}" FontSize="50" FontWeight="Black" ></TextBlock>
-                <TextBlock Margin="0 50 0 0" HorizontalAlignment="Center" Text="You have won!" FontSize="40" FontWeight="Black"></TextBlock>
-                <Button Cursor="Hand" Command="{Binding AgainCommand}" Margin="0 10 0 0" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Background="#FF3B9920">Again?</Button>
-            </StackPanel>
-        </Grid>
+            </local:GameOverView.Style>
+        </local:GameOverView>
     </Grid>
 </Window>

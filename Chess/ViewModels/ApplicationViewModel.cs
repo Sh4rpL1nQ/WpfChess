@@ -11,7 +11,7 @@ namespace Chess.ViewModels
     public class ApplicationViewModel : PropertyChangedBase
     {
         private Square selectedSquare;
-        private PlayerViewModel winner;
+        private GameOverViewModel gameOverModel;
 
         public Game Chess { get; set; }
 
@@ -24,40 +24,47 @@ namespace Chess.ViewModels
             PlayerModel2 = new PlayerViewModel(Chess.Board, Color.Black);
             PlayerModel2.Player.UserName = "Player2";
 
-            PlayerModel1.TimeIsOver += PlayerModel_TimeIsOver; 
-            PlayerModel2.TimeIsOver += PlayerModel_TimeIsOver;
+            PlayerModel1.Player.OnGameOver += Player_OnGameOver;
+            PlayerModel2.Player.OnGameOver += Player_OnGameOver;
+            PlayerModel1.TimeIsOver += Player_OnGameOver; 
+            PlayerModel2.TimeIsOver += Player_OnGameOver;
 
             SquareCommand = new ActionCommand(SquareAction);
-            AgainCommand = new ActionCommand(AgainAction);
 
             PlayerModel1.Player.IsMyTurn = true;
         }
 
-        private void PlayerModel_TimeIsOver(object sender, EventArgs e)
+        private void Player_OnGameOver(object sender, EventArgs e)
         {
-            Winner = sender as PlayerViewModel;            
+            var winner = sender as Player;
+            GameOverModel = new GameOverViewModel(winner.Color == PlayerModel1.Player.Color ? PlayerModel1.Player : PlayerModel2.Player, (e as GameOverEventArgs).GameOver);
+            PlayerModel1.StopTimer();
+            PlayerModel2.StopTimer();
+            GameOverModel.OnRetry += GameOverModel_OnRetry;
+        }
+
+        private void GameOverModel_OnRetry(object sender, EventArgs e)
+        {
+            GameOverModel = null;
+            Chess.Reset();
+            PlayerModel1.Reset();
+            PlayerModel2.Reset();
+            PlayerModel1.Player.IsMyTurn = true;
         }
 
         public PlayerViewModel PlayerModel1 { get; set; }
 
         public PlayerViewModel PlayerModel2 { get; set; }
 
-        public PlayerViewModel Winner
+        public GameOverViewModel GameOverModel
         {
-            get { return winner; }
-            set { RaisePropertyChanged(ref winner, value); }
+            get { return gameOverModel; }
+            set { RaisePropertyChanged(ref gameOverModel, value); }
         }
 
         public Player PlayerAtTurn => PlayerModel1.Player.IsMyTurn ? PlayerModel1.Player : PlayerModel2.Player;
 
         public ICommand SquareCommand { get; }
-
-        public ICommand AgainCommand { get; }
-
-        public void AgainAction(object sender)
-        {
-
-        }
 
         public void SquareAction(object sender)
         {
@@ -66,9 +73,7 @@ namespace Chess.ViewModels
             if (selectedSquare != null && !square.Point.Equals(selectedSquare.Point))
             {
                 if (PlayerAtTurn.Move(selectedSquare.Piece, square))
-                {
                     ChangeTurns();
-                }
 
                 ClearSelections();
 
@@ -104,17 +109,17 @@ namespace Chess.ViewModels
         {
             if (PlayerModel1.Player.IsMyTurn)
             {
-                PlayerModel1.Player.IsMyTurn = false;
-                PlayerModel2.Player.IsMyTurn = true;
                 PlayerModel1.StopTimer();
                 PlayerModel2.StartTimer();
+                PlayerModel1.Player.IsMyTurn = false;
+                PlayerModel2.Player.IsMyTurn = true;                
             }
              else
             {
-                PlayerModel2.Player.IsMyTurn = false;
-                PlayerModel1.Player.IsMyTurn = true;
                 PlayerModel2.StopTimer();
                 PlayerModel1.StartTimer();
+                PlayerModel2.Player.IsMyTurn = false;
+                PlayerModel1.Player.IsMyTurn = true;                
             }   
         }
     }

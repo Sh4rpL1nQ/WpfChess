@@ -15,7 +15,6 @@ namespace Chess.ViewModels
         private string date;
         private TimeSpan startingTime;
         private bool piecesAreSelectable;
-        private bool showPossibleMoves;
 
         public PlayerViewModel(Board board, Color color)
         {
@@ -26,7 +25,7 @@ namespace Chess.ViewModels
             startingTime = TimeSpan.FromMinutes(5);
             TimeRemaining = startingTime.ToString(@"mm\:ss");
             Date = DateTime.Now.ToShortDateString();
-            InititializeTimer();
+            ResetTimer();
         }
 
         public string TimeRemaining
@@ -45,12 +44,22 @@ namespace Chess.ViewModels
 
         public ICommand ReviveCommand { get; set; }
 
-
-        private void InititializeTimer()
+        public void ResetTimer()
         {
             timer = new DispatcherTimer();
+            startingTime = TimeSpan.FromMinutes(5);
+            TimeRemaining = startingTime.ToString(@"mm\:ss");
             timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += Timer_Tick;            
+            timer.Tick += Timer_Tick;
+            StopTimer();
+        }
+
+        public void Reset()
+        {
+            ResetTimer();
+            Player.LostPieces.Clear();
+            Player.ShowPossibleMoves = false;
+            Player.IsMyTurn = false;
         }
 
         public void StartTimer() 
@@ -84,7 +93,7 @@ namespace Chess.ViewModels
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (startingTime == TimeSpan.Zero) TimeIsOver?.Invoke(this, new EventArgs());
+            if (startingTime == TimeSpan.Zero) TimeIsOver?.Invoke(this, new GameOverEventArgs(GameOver.Time));
             startingTime = startingTime.Add(TimeSpan.FromSeconds(-1));
             TimeRemaining = startingTime.ToString(@"mm\:ss");
             Date = DateTime.Now.ToShortDateString();

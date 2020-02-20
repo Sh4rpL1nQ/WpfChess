@@ -42,7 +42,7 @@ namespace Library
 
         public abstract bool CanBeMovedToSquare(Square square);
 
-        public bool CheckCollision(Square end, Board board)
+        private bool CheckCollision(Square end, Board board)
         {
             var dir = ChooseRightDirection(end.Point);
             if (dir == null) return false;
@@ -63,6 +63,14 @@ namespace Library
                 if (end.Piece != null && Color.Equals(end.Piece.Color)) 
                     return true;
             }
+
+            return false;
+        }
+
+        public bool CanMoveWithoutColliding(Square end, Board board)
+        {
+            if (CanBeMovedToSquare(end))
+                return !CheckCollision(end, board);
 
             return false;
         }

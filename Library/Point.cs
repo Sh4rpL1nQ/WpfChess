@@ -40,6 +40,10 @@ namespace Library
         public List<Point> AllMovesWithinDirection(Point end, Point dir)
         {
             var list = new List<Point>();
+
+            if (dir == null)
+                return list;
+
             var start = new Point(PosX, PosY);
 
             while (!start.Equals(end))
