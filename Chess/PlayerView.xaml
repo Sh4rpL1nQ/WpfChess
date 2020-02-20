@@ -39,8 +39,8 @@
     <Grid x:Name="root">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+                <ColumnDefinition Width="3.5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Width="200" Height="200">
                 <Border CornerRadius="200" BorderThickness="5" Background="#2D2D30">
@@ -67,7 +67,7 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid>
@@ -75,19 +75,19 @@
                         <ColumnDefinition Width="3*"></ColumnDefinition>
                         <ColumnDefinition Width="1.5*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <DockPanel Margin="10 10 10 10">
+                    <DockPanel Margin="10 10 0 10">
                         <Grid DockPanel.Dock="Top" Background="#2D2D30" >
                             <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="5 5 5 5" HorizontalAlignment="Center">Pieces</TextBlock>
                         </Grid>
                         <ItemsControl ItemsSource="{Binding Player.LostPieces}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel></WrapPanel>
+                                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Style="{StaticResource BoardButtonStyle}">
+                                    <Button Margin="3 3 3 3" Style="{StaticResource BoardButtonStyle}">
                                         <Image Width="30" Height="30" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
                                     </Button>
                                 </DataTemplate>
@@ -96,17 +96,17 @@
                     </DockPanel>
                     <DockPanel Grid.Column="1" Margin="10 10 10 10">
                         <Grid DockPanel.Dock="Top" Background="#2D2D30" >
-                            <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="5 5 5 5" HorizontalAlignment="Center">Promotion</TextBlock>
+                            <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="5 5 5 5" HorizontalAlignment="Center">Promote</TextBlock>
                         </Grid>
-                        <ItemsControl ItemsSource="{Binding Player.LostPieces}">
+                        <ItemsControl ItemsSource="{Binding Promotables}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel></WrapPanel>
+                                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Style="{StaticResource BoardButtonStyle}">
+                                    <Button Margin="6 3 6 3" Style="{StaticResource BoardButtonStyle}">
                                         <Image Width="30" Height="30" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
                                     </Button>
                                 </DataTemplate>
