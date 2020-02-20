@@ -1,4 +1,5 @@
 ﻿using Library;
+using Library.Pieces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,6 +20,12 @@ namespace Chess.ViewModels
         public PlayerViewModel(Board board, Color color)
         {
             Player = new Player(board, color);
+
+            Promotables = new ObservableCollection<Piece>();
+            Promotables.Add(new Queen() { Color = color });
+            Promotables.Add(new Knight() { Color = color });
+            Promotables.Add(new Bishop() { Color = color });
+            Promotables.Add(new Rook() { Color = color });
 
             ReviveCommand = new ActionCommand(ReviveAction);
 
@@ -43,6 +50,8 @@ namespace Chess.ViewModels
         public Player Player { get; set; }
 
         public ICommand ReviveCommand { get; set; }
+
+        public ObservableCollection<Piece> Promotables { get; set; }
 
         public void ResetTimer()
         {

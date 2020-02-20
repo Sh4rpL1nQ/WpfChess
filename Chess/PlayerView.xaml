@@ -39,8 +39,8 @@
     <Grid x:Name="root">
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Width="200" Height="200">
                 <Border CornerRadius="200" BorderThickness="5" Background="#2D2D30">
@@ -70,25 +70,50 @@
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <DockPanel Margin="10 10 10 10">
-                    <Grid DockPanel.Dock="Top" Background="#2D2D30" >
-                        <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="5 5 5 5" HorizontalAlignment="Center">Pieces</TextBlock>
-                    </Grid>
-                    <ItemsControl ItemsSource="{Binding Player.LostPieces}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel></WrapPanel>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Button Style="{StaticResource BoardButtonStyle}">
-                                    <Image Width="30" Height="30" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
-                                </Button>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </DockPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <DockPanel Margin="10 10 10 10">
+                        <Grid DockPanel.Dock="Top" Background="#2D2D30" >
+                            <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="5 5 5 5" HorizontalAlignment="Center">Pieces</TextBlock>
+                        </Grid>
+                        <ItemsControl ItemsSource="{Binding Player.LostPieces}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel></WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource BoardButtonStyle}">
+                                        <Image Width="30" Height="30" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DockPanel>
+                    <DockPanel Grid.Column="1" Margin="10 10 10 10">
+                        <Grid DockPanel.Dock="Top" Background="#2D2D30" >
+                            <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="5 5 5 5" HorizontalAlignment="Center">Promotion</TextBlock>
+                        </Grid>
+                        <ItemsControl ItemsSource="{Binding Player.LostPieces}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel></WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource BoardButtonStyle}">
+                                        <Image Width="30" Height="30" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DockPanel>
+                </Grid>
                 <DockPanel Grid.Row="1" Margin="10 10 10 10">
                     <Grid DockPanel.Dock="Top" Background="#2D2D30" >
                         <TextBlock FontWeight="Bold" Foreground="#FFDF66" Margin="5 5 5 5" HorizontalAlignment="Center">Settings</TextBlock>

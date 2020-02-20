@@ -7,6 +7,8 @@ namespace Library.Pieces
 {
     public class King : Piece
     {
+        private Color color;
+
         public King()
         {
             Directions = new List<Point> 
@@ -21,6 +23,19 @@ namespace Library.Pieces
                 new Point { PosX = 0, PosY = 1 },
 
             };
+
+            Image = @"Images\King_B.png";
+        }
+
+        public override Color Color
+        {
+            get { return color; }
+            set
+            {
+                color = value;
+                if (Color == Color.White)
+                    Image = @"Images\King_W.png";
+            }
         }
 
         public override event EventHandler UpgradePiece;

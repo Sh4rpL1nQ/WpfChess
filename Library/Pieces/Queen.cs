@@ -6,6 +6,8 @@ namespace Library.Pieces
 {
     public class Queen : Piece
     {
+        private Color color;
+
         public Queen()
         {
             Directions = new List<Point>
@@ -18,8 +20,20 @@ namespace Library.Pieces
                 new Point { PosX = -1, PosY = 0 },
                 new Point { PosX = 0, PosY = -1 },
                 new Point { PosX = 0, PosY = 1 },
-
             };
+
+            Image = @"Images\Queen_B.png";
+        }
+
+        public override Color Color
+        {
+            get { return color; }
+            set
+            {
+                color = value;
+                if (Color == Color.White)
+                    Image = @"Images\Queen_W.png";
+            }
         }
 
         public override event EventHandler UpgradePiece;

@@ -18,6 +18,8 @@ namespace Library.Pieces
                 new Point { PosX = -1, PosY = -1 },
                 new Point { PosX = 0, PosY = -1 },
             };
+
+            Image = @"Images\Pawn_B.png";
         }
 
         public override Color Color
@@ -34,6 +36,8 @@ namespace Library.Pieces
                         new Point { PosX = -1, PosY = 1 },
                         new Point { PosX = 0, PosY = 1 },
                     };
+
+                    Image = @"Images\Pawn_W.png";
                 }
             }
         }

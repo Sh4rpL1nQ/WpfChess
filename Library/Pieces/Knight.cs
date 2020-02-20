@@ -6,6 +6,8 @@ namespace Library.Pieces
 {
     public class Knight : Piece
     {
+        private Color color;
+
         public Knight()
         {
             Directions = new List<Point>
@@ -19,6 +21,19 @@ namespace Library.Pieces
                 new Point { PosX = 2, PosY = -1 },
                 new Point { PosX = -2, PosY = 1 },
             };
+
+            Image = @"Images\Knight_B.png";
+        }
+
+        public override Color Color
+        {
+            get { return color; }
+            set
+            {
+                color = value;
+                if (Color == Color.White)
+                    Image = @"Images\Knight_W.png";
+            }
         }
 
         public override event EventHandler UpgradePiece;
