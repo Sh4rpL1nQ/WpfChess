@@ -13,6 +13,7 @@
     <Window.Resources>
         <SolidColorBrush x:Key="WhiteColor" Color="#E1C699" />
         <SolidColorBrush x:Key="BlackColor" Color="#0E1111" />
+        <SolidColorBrush x:Key="TransparentWhite" Color="#FFFFFF" Opacity="0.5" />
 
         <Style x:Key="BoardButtonStyle">
             <Setter Property="Button.BorderThickness" Value="0"></Setter>
@@ -143,7 +144,7 @@
                 <local:PlayerView DataContext="{Binding PlayerModel2}" Background="#FF787878" Margin="20 20 20 20" Grid.Row="1"></local:PlayerView>
             </Grid>
         </Grid>
-        <local:GameOverView Background="White" Opacity="0.5" Panel.ZIndex="9">
+        <local:GameOverView Background="{StaticResource TransparentWhite}">
             <local:GameOverView.Style>
                 <Style TargetType="local:GameOverView">
                     <Setter Property="Visibility" Value="Visible"></Setter>

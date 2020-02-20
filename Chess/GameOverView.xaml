@@ -9,8 +9,8 @@
     <Grid>
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"> 
             <StackPanel>
-                <TextBlock Margin="10 10 10 10" FontSize="20" FontWeight="Black">The game is over!</TextBlock>
-                <TextBox Margin="10 10 10 10"  Background="Transparent" Text="{Binding GameOverMessage, Mode=OneWay}" TextWrapping="Wrap" FontSize="30" FontWeight="Black"></TextBox>
+                <TextBlock HorizontalAlignment="Center" Margin="10 10 10 10" FontSize="20" FontWeight="Black">The game is over!</TextBlock>
+                <TextBox HorizontalAlignment="Center" BorderThickness="0" Margin="10 10 10 10"  Background="Transparent" Text="{Binding GameOverMessage, Mode=OneWay}" TextWrapping="Wrap" FontSize="30" FontWeight="Black"></TextBox>
                 <Button Margin="10 10 10 10" FontSize="12" FontWeight="Bold" Background="Green" Command="{Binding RetryCommand}">Restart</Button>
             </StackPanel>
         </WrapPanel>

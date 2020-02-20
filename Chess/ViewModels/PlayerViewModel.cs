@@ -102,7 +102,7 @@ namespace Chess.ViewModels
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (startingTime == TimeSpan.Zero) TimeIsOver?.Invoke(this, new GameOverEventArgs(GameOver.Time));
+            if (startingTime == TimeSpan.Zero) TimeIsOver?.Invoke(Player, new GameOverEventArgs(GameOver.Time));
             startingTime = startingTime.Add(TimeSpan.FromSeconds(-1));
             TimeRemaining = startingTime.ToString(@"mm\:ss");
             Date = DateTime.Now.ToShortDateString();
