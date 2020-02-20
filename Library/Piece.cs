@@ -40,6 +40,8 @@ namespace Library
 
         public List<Point> Directions { get; set; }
 
+        public bool IsFirstMove { get; set; } = true;
+
         public abstract bool CanBeMovedToSquare(Square square);
 
         private bool CheckCollision(Square end, Board board)

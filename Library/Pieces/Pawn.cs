@@ -40,8 +40,6 @@ namespace Library.Pieces
             }
         }
 
-        public bool IsFirstMove { get; set; }
-
         public override bool CanBeMovedToSquare(Square end)
         {
             var dir = ChooseRightDirection(end.Point);
@@ -52,16 +50,14 @@ namespace Library.Pieces
             //attacking move
             if (dir.PosX != 0 && Point.GoToDirection(dir).Equals(end.Point) && end.Piece != null)
             {
-                IsFirstMove = false;
                 CheckPawnPositionForUpgrade(end);
                 return true;
             }
 
             //normal move
             var points = Point.AllMovesWithinDirection(end.Point, dir);
-            if (dir.PosX == 0 && (points.Count == 1 ^ (points.Count == 2 && !IsFirstMove)) && end.Piece == null)
+            if (dir.PosX == 0 && (points.Count == 1 ^ (points.Count == 2 && IsFirstMove)) && end.Piece == null)
             {
-                IsFirstMove = true;
                 CheckPawnPositionForUpgrade(end);
                 return true;
             }

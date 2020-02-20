@@ -69,6 +69,7 @@ namespace Library
                 if (square.Point.Equals(end.Point))
                 {
                     var p = board.ShiftPiece(piece, end);
+                    piece.IsFirstMove = false;
                     if (p != null)
                         LostPieces.Add(p);
 
@@ -108,12 +109,14 @@ namespace Library
             }
             else
             {
-                //patt
-                if (moves.Count == 0)
-                    return GameOver.Stalemate;
-            }
+                foreach (var piece in board.GetAllPiecesByColor(Color))
+                {
+                    if (CalcPossibleMoves(piece).Count != 0)
+                        return GameOver.None;
+                }
 
-            return GameOver.None;
+                return GameOver.Stalemate;
+            }
         }
 
         public void PossibleMoves(Piece piece)

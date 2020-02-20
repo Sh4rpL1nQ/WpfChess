@@ -19,7 +19,7 @@ namespace Library
         public void Reset()
         {
             Board.Squares.Clear();
-            var board = Serializer.FromXml<Board>(@"..\..\..\..\Library\Xml\MateTest.xml");
+            var board = Serializer.FromXml<Board>(@"..\..\..\..\Library\Xml\Structure.xml");
             foreach (var square in board.Squares)
                 Board.Squares.Add(square);
         }
