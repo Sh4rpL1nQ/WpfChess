@@ -35,7 +35,7 @@ namespace Library
                         case GameOver.Checkmate:
                             OnGameOver?.Invoke(this, new GameOverEventArgs(gameOver));
                             break;
-                        case GameOver.Patt:
+                        case GameOver.Stalemate:
                             OnGameOver?.Invoke(this, new GameOverEventArgs(gameOver));
                             break;
                         default: break;
@@ -110,7 +110,7 @@ namespace Library
             {
                 //patt
                 if (moves.Count == 0)
-                    return GameOver.Patt;
+                    return GameOver.Stalemate;
             }
 
             return GameOver.None;

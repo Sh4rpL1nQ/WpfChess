@@ -36,8 +36,9 @@ namespace Chess.ViewModels
 
         private void Player_OnGameOver(object sender, EventArgs e)
         {
-            var winner = sender as Player;
-            GameOverModel = new GameOverViewModel(winner.Color == PlayerModel1.Player.Color ? PlayerModel1.Player : PlayerModel2.Player, (e as GameOverEventArgs).GameOver);
+            var looser = sender as Player;
+            var winner = looser.Color == PlayerModel1.Player.Color ? PlayerModel2.Player : PlayerModel1.Player;
+            GameOverModel = new GameOverViewModel(winner, looser, (e as GameOverEventArgs).GameOver);
             PlayerModel1.StopTimer();
             PlayerModel2.StopTimer();
             GameOverModel.OnRetry += GameOverModel_OnRetry;

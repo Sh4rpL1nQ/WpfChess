@@ -24,7 +24,9 @@ namespace Library
     {
         None = 0,
         Checkmate = 1,
-        Patt = 2,
+        Stalemate = 2,
+        Draw = 3,
+        Surrender = 4,
         Time
     }
 }

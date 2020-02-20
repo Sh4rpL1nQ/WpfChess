@@ -7,11 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <StackPanel Orientation="Vertical">
-            <TextBlock Margin="0 50 0 0" Text="Congratulation" FontSize="30" FontWeight="Black" HorizontalAlignment="Center"></TextBlock>
-            <TextBlock Margin="0 50 0 0" HorizontalAlignment="Center" Text="{Binding Winner}" FontSize="50" FontWeight="Black" ></TextBlock>
-            <TextBlock Margin="0 50 0 0" HorizontalAlignment="Center" Text="{Binding GameOver, StringFormat=You have won by {0}}" FontSize="40" FontWeight="Black"></TextBlock>
-            <Button Cursor="Hand" Command="{Binding RetryCommand}" Margin="0 10 0 0" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Background="#FF3B9920">Again?</Button>
-        </StackPanel>
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="10">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Margin="0 50 0 0" Text="The game is over" FontSize="30" FontWeight="Black" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Margin="10 10 10 10" HorizontalAlignment="Center" Text="{Binding GameOverMessage}" FontSize="40" FontWeight="Black"></TextBlock>
+                <Button Cursor="Hand" Command="{Binding RetryCommand}" Margin="0 10 0 0" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Background="#FF3B9920">Again?</Button>
+            </StackPanel>
+        </WrapPanel>
     </Grid>
 </UserControl>
