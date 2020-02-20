@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chess", "Chess\Chess.csproj", "{5B7AF918-6B26-4CC1-98BE-6EA7CA9D2C74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess", "Chess\Chess.csproj", "{5B7AF918-6B26-4CC1-98BE-6EA7CA9D2C74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{F4C224FC-5582-42BC-80FB-6EFAE0A4D6BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Library\Library.csproj", "{F4C224FC-5582-42BC-80FB-6EFAE0A4D6BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryTest", "LibraryTest\LibraryTest.csproj", "{F385EA8B-50FB-4E6C-9E64-852D78FDA4D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryTest", "LibraryTest\LibraryTest.csproj", "{F385EA8B-50FB-4E6C-9E64-852D78FDA4D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,12 +15,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5B7AF918-6B26-4CC1-98BE-6EA7CA9D2C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B7AF918-6B26-4CC1-98BE-6EA7CA9D2C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B7AF918-6B26-4CC1-98BE-6EA7CA9D2C74}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{5B7AF918-6B26-4CC1-98BE-6EA7CA9D2C74}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{5B7AF918-6B26-4CC1-98BE-6EA7CA9D2C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B7AF918-6B26-4CC1-98BE-6EA7CA9D2C74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4C224FC-5582-42BC-80FB-6EFAE0A4D6BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4C224FC-5582-42BC-80FB-6EFAE0A4D6BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C224FC-5582-42BC-80FB-6EFAE0A4D6BE}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C224FC-5582-42BC-80FB-6EFAE0A4D6BE}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{F4C224FC-5582-42BC-80FB-6EFAE0A4D6BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4C224FC-5582-42BC-80FB-6EFAE0A4D6BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F385EA8B-50FB-4E6C-9E64-852D78FDA4D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
