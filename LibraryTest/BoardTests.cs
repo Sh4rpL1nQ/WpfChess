@@ -1,4 +1,5 @@
 ﻿using Library;
+using Library.Pieces;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,8 @@ namespace LibraryTest
         {
             board = Serializer.FromXml<Board>(@"..\..\..\..\LibraryTest\Xml\PieceBlocking.xml");
 
-            var piece = board.Squares.FirstOrDefault(x => x.Piece?.PieceType == PieceType.Bishop)?.Piece;
-            var square = board.Squares.FirstOrDefault(x => x.Piece?.PieceType == PieceType.Knight);
+            var piece = board.Squares.FirstOrDefault(x => x.Piece is Bishop)?.Piece;
+            var square = board.Squares.FirstOrDefault(x => x.Piece is Knight);
 
             var dir = piece.ChooseRightDirection(square.Point);
 

@@ -25,9 +25,6 @@ namespace Library
             set { RaisePropertyChanged(ref image, value); }
         }
 
-        [XmlIgnore]
-        public abstract PieceType PieceType { get; }
-
         public virtual Color Color
         {
             get { return color; }
@@ -49,7 +46,7 @@ namespace Library
             var dir = ChooseRightDirection(end.Point);
             if (dir == null) return false;
 
-            if (PieceType != PieceType.Pawn)
+            if (!(this is Pawn))
             {
                 if (end.Piece != null && Color.Equals(end.Piece.Color)) 
                     return true;

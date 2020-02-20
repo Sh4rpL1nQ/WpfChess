@@ -7,8 +7,6 @@ namespace Library.Pieces
 {
     public class King : Piece
     {
-        public override PieceType PieceType => PieceType.King;
-
         public King()
         {
             Directions = new List<Point> 

@@ -10,8 +10,6 @@ namespace Library.Pieces
 
         public override event EventHandler UpgradePiece;
 
-        public override PieceType PieceType => PieceType.Pawn;
-
         public Pawn()
         {
             Directions = new List<Point>

@@ -6,8 +6,6 @@ namespace Library.Pieces
 {
     public class Knight : Piece
     {
-        public override PieceType PieceType => PieceType.Knight;
-
         public Knight()
         {
             Directions = new List<Point>

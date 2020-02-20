@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Pieces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -87,7 +88,7 @@ namespace Library
             var moves = CalcPossibleMoves(king);
             if (enemyPiece != null)
             {                
-                var enemyPieces = board.GetAllPiecesByColor(Color).Where(x => x.PieceType != PieceType.King);                
+                var enemyPieces = board.GetAllPiecesByColor(Color).Where(x => !(x is King));                
 
                 //Can be blocked?
                 foreach (var piece in enemyPieces)

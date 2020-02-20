@@ -71,7 +71,7 @@ namespace Library
         {
             var allPieces = GetAllPiecesByColor(turn);
 
-            return allPieces.FirstOrDefault(x => x.PieceType == PieceType.King);
+            return allPieces.FirstOrDefault(x => x is King);
         }
 
         public List<Piece> GetAllPiecesByColor(Color color)
