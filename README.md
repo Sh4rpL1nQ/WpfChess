@@ -134,7 +134,7 @@ Therefore riht below our 8x8 matrix, there is another 8x8 matrix for the assigne
 | Number in TXT     | Description |
 | --------- | -------------------- |
 | 1     | Corresponds to the color which was declared first |
-| 2     | <Color>Black</Color> |
+| 2     | Corresponds to the color which was declared second |
 
 To complete the example, here is the color assignment of a potential starting board.
 
