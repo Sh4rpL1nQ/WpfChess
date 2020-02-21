@@ -8,8 +8,10 @@ using System.Text;
 
 namespace Library
 {
-    public class Board : ICloneable
+    public class Board : PropertyChangedBase, ICloneable
     {
+        private Color topColor;
+
         public ObservableCollection<Square> Squares { get; set; }
 
         public Board()
@@ -34,7 +36,11 @@ namespace Library
             }
         }
 
-        public Color TopColor { get; set; }
+        public Color TopColor
+        {
+            get { return topColor; }
+            set { RaisePropertyChanged(ref topColor, value); }
+        }
 
         public Piece IsKingChecked(Color turn)
         {

@@ -10,14 +10,14 @@ using System.Windows.Threading;
 namespace Chess.ViewModels
 {
     public class PlayerViewModel : PropertyChangedBase
-    {
-        private DispatcherTimer timer;
-        private string timeRemaining;
-        private string date;
+    {        
         private TimeSpan startingTime;
         private bool piecesAreSelectable;
         private Piece selectedPromotion;
         private int playerTimeInMinutes;
+        private DispatcherTimer timer;
+        private string timeRemaining;
+        private string date;
 
         public PlayerViewModel(Board board, Color color, int playerTimeInMinutes)
         {
@@ -55,7 +55,7 @@ namespace Chess.ViewModels
 
         public ICommand ReviveCommand { get; set; }
 
-        public ObservableCollection<Piece> Promotables { get; set; }
+        public ObservableCollection<Piece> Promotables { get; }
 
         public void ResetTimer()
         {

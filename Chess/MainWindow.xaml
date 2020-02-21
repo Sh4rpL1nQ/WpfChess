@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         xmlns:vm="clr-namespace:Chess.ViewModels"
+        xmlns:conv="clr-namespace:Chess.Converter"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200" Background="#2D2D30" ResizeMode="NoResize">
     <Window.DataContext>
@@ -153,8 +154,8 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <local:PlayerView DataContext="{Binding PlayerModel1}" Background="#FF787878" Margin="20 20 20 20"></local:PlayerView>
-                    <local:PlayerView DataContext="{Binding PlayerModel2}" Background="#FF787878" Margin="20 20 20 20" Grid.Row="1"></local:PlayerView>
+                    <local:PlayerView DataContext="{Binding PlayerModel1}" Background="#FF787878" Margin="20 20 20 20" />
+                    <local:PlayerView DataContext="{Binding PlayerModel2}" Background="#FF787878" Margin="20 20 20 20" Grid.Row="1" />
                 </Grid>
             </Grid>
         </DockPanel>

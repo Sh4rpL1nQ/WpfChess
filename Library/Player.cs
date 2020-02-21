@@ -19,7 +19,7 @@ namespace Library
         public Color Color
         {
             get { return color; }
-            set  { color = value; }
+            set  { RaisePropertyChanged(ref color, value); }
         }
 
         public bool IsMyTurn

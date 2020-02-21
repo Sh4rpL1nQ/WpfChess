@@ -6,7 +6,7 @@ namespace Library
 {
     public class Game
     {
-        private ApplicationSettings settings;
+        private ApplicationSettings settings;       
 
         public Board Board { get; set; }
 
