@@ -14,6 +14,7 @@ These instructions will get you a copy of the project up and running on your loc
 [Make a custom chess board](#custom) 
 
 <a name="deploy"/>
+
 ## Deployment
 
 Just start the thing. If you want to play a fresh game without any custom starting board, simply change the tag _BoardXmlName_ in the settings XML file **_Settings.xml_** (default) to **Structure**. (That will guide the application to use the **_Structure.xml_** file inside the XML folder)
@@ -22,10 +23,12 @@ The location of all XML files (Settings.xml, Structure.xml, all custom boards) a
 ..\Chess\Library\Xml\
 ```
 <a name="time"/>
+
 ## Change time the players have to play the game
 Simply change the tag _PlayerTimeInMinutes_ in the settings XML file **_Settings.xml_**
 
 <a name="custom"/>
+
 ## Make a custom chess board (custom location of all pieces)
 In the following parts the generation of a custom board is explained. <br/>
 
