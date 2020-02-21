@@ -98,7 +98,7 @@ This means the pieces (Pawns) which will have the color white, will move to the 
 
 #### Where are the pieces located and what type of piece is it
 
-This 8x8 matrix represents the chess board described in the [General Settings] (#general).<br/>
+This 8x8 matrix represents the chess board described in the [General Settings](#general).<br/>
 The type of piece corresponds to an integer value. You can find them inside the **_LookupTable.txt_**.
 | Number in TXT   | LookupTable-Value |
 | --------| --------| 
