@@ -5,7 +5,7 @@ You can generate custom piece formations and can change all important settings (
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for fun and testing purposes. 
+These instructions will get you a copy of the project and let it run on your local machine for fun and testing purposes. 
 
 ## Table of Contents  
 [Deployment](#deploy)  
@@ -27,7 +27,7 @@ The main settings are changeable via XML file. The path to this **_Settings.xml_
 ```
 ..\Chess\Library\Xml\
 ```
-There different settings are:
+The different settings are:
 | Tag   | Description |
 | --------| --------|
 | Priority  | Name of the TXT file to be loaded, which contains the information about the chess board and its pieces. This file will be loaded, even if the game is over and the formation should switch. |
