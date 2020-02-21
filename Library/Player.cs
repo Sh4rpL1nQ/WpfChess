@@ -60,6 +60,8 @@ namespace Library
             this.board = board;
             Color = color;
 
+            showPossibleMoves = true;
+
             LostPieces = new ObservableCollection<Piece>();
         }
 
@@ -73,7 +75,7 @@ namespace Library
                     board.CheckPiecePromotable(piece);
                     piece.IsFirstMove = false;
                     if (p != null)
-                        LostPieces.Add(p);
+                        OnPieceRemoved?.Invoke(p, new EventArgs());
 
                     return true;
                 }
@@ -81,6 +83,8 @@ namespace Library
 
             return false;
         }
+
+        public event EventHandler OnPieceRemoved;
 
         public GameOver IsCheckMate()
         {

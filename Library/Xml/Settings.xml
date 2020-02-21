@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ApplicationSettings>
-  <BoardXmlName>Structure</BoardXmlName>
+  <Switch1>Start_White</Switch1>
+  <Switch2>Start_Black</Switch2>
+  <Priority></Priority>
   <PlayerTimeInMinutes>5</PlayerTimeInMinutes>
 </ApplicationSettings>

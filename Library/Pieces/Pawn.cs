@@ -7,6 +7,7 @@ namespace Library.Pieces
     public class Pawn : Piece
     {
         private Color color;
+        private bool partOfTopBoard;
 
         public Pawn()
         {
@@ -20,6 +21,22 @@ namespace Library.Pieces
             Image = @"Images\Pawn_B.png";
         }
 
+        public override bool PartOfTopBoard
+        { 
+            get { return partOfTopBoard; }
+            set
+            {
+                partOfTopBoard = value;
+                if (partOfTopBoard)
+                Directions = new List<Point>()
+                {
+                    new Point { PosX = 1, PosY = 1 },
+                    new Point { PosX = -1, PosY = 1 },
+                    new Point { PosX = 0, PosY = 1 },
+                };
+            }
+        }
+
         public override Color Color
         {
             get { return color; }
@@ -27,16 +44,7 @@ namespace Library.Pieces
             { 
                 color = value;
                 if (Color == Color.White)
-                {
-                    Directions = new List<Point>
-                    {
-                        new Point { PosX = 1, PosY = 1 },
-                        new Point { PosX = -1, PosY = 1 },
-                        new Point { PosX = 0, PosY = 1 },
-                    };
-
                     Image = @"Images\Pawn_W.png";
-                }
             }
         }
 

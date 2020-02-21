@@ -6,24 +6,50 @@ namespace Library
 {
     public class Game
     {
-        private string xmlPath;
+        private ApplicationSettings settings;
 
         public Board Board { get; set; }
 
         public bool ShowPossibleMoves { get; set; }
 
-        public Game(string xmlPath)
+        public Game(ApplicationSettings settings)
         {
-            this.xmlPath = xmlPath;
+            this.settings = settings;
 
             Board = new Board();
-            Reset();
+            Reset(true);
         }
 
-        public void Reset()
+        public void Reset(bool init = false)
         {
             Board.Squares.Clear();
-            var board = Serializer.FromXml<Board>(xmlPath);
+            if (settings.Priority != string.Empty)
+            {
+                var board = Serializer.ImportFromTxt(settings.BoardXmlPathPriority) as Board;
+                FillBoard(board);
+                return;
+            }
+
+            if (Board.TopColor == Color.White || init)
+            {
+                var board = Serializer.ImportFromTxt(settings.BoardXmlPathSwitch1) as Board;
+                FillBoard(board);
+            }
+            else
+            {
+                var board = Serializer.ImportFromTxt(settings.BoardXmlPathSwitch2) as Board;
+                FillBoard(board);
+            }            
+        }
+
+        public void Reset(Board board)
+        {
+            Board.Squares.Clear();
+            FillBoard(board);
+        }
+
+        private void FillBoard(Board board)
+        {
             foreach (var square in board.Squares)
                 Board.Squares.Add(square);
         }

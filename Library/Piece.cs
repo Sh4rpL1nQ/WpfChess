@@ -35,6 +35,8 @@ namespace Library
 
         public List<Point> Directions { get; set; }
 
+        public virtual bool PartOfTopBoard { get; set; }
+
         public bool IsFirstMove { get; set; } = true;
 
         public abstract bool CanBeMovedToSquare(Square square);

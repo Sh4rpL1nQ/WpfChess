@@ -53,104 +53,111 @@
         </Style>
     </Window.Resources>
     <Grid x:Name="root">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Border Background="#654321" BorderBrush="Black" BorderThickness="2" Width="450" Height="450">
-                <Border.Style>
-                    <Style>
-                        <Setter Property="TextBox.Foreground" Value="White"></Setter>
-                        <Setter Property="TextBox.FontWeight" Value="Bold"></Setter>
-                    </Style>
-                </Border.Style>
-                <Grid>
-                    <Grid Width="400" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Margin="25 0 0 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">A</TextBlock>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">B</TextBlock>
-                        <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">C</TextBlock>
-                        <TextBlock Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">D</TextBlock>
-                        <TextBlock Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center">E</TextBlock>
-                        <TextBlock Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">F</TextBlock>
-                        <TextBlock Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center">G</TextBlock>
-                        <TextBlock Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">H</TextBlock>
-                    </Grid>
-                    <Grid Width="25" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Margin="0 25 0 0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50"></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">8</TextBlock>
-                        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">7</TextBlock>
-                        <TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">6</TextBlock>
-                        <TextBlock Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">5</TextBlock>
-                        <TextBlock Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">4</TextBlock>
-                        <TextBlock Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">3</TextBlock>
-                        <TextBlock Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center">2</TextBlock>
-                        <TextBlock Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center">1</TextBlock>
-                    </Grid>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Options">
+                    <MenuItem Header="Import" Command="{Binding ImportTxtCommand}"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Background="#654321" BorderBrush="Black" BorderThickness="2" Width="450" Height="450">
+                    <Border.Style>
+                        <Style>
+                            <Setter Property="TextBox.Foreground" Value="White"></Setter>
+                            <Setter Property="TextBox.FontWeight" Value="Bold"></Setter>
+                        </Style>
+                    </Border.Style>
+                    <Grid>
+                        <Grid Width="400" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Margin="25 0 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">A</TextBlock>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">B</TextBlock>
+                            <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">C</TextBlock>
+                            <TextBlock Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">D</TextBlock>
+                            <TextBlock Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center">E</TextBlock>
+                            <TextBlock Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">F</TextBlock>
+                            <TextBlock Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center">G</TextBlock>
+                            <TextBlock Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">H</TextBlock>
+                        </Grid>
+                        <Grid Width="25" HorizontalAlignment="Left" Height="400" VerticalAlignment="Top" Margin="0 25 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">8</TextBlock>
+                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">7</TextBlock>
+                            <TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">6</TextBlock>
+                            <TextBlock Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">5</TextBlock>
+                            <TextBlock Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">4</TextBlock>
+                            <TextBlock Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">3</TextBlock>
+                            <TextBlock Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center">2</TextBlock>
+                            <TextBlock Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center">1</TextBlock>
+                        </Grid>
 
-                    <WrapPanel Margin="25 25 0 0">
-                        <Border BorderBrush="Black" BorderThickness="1">
-                            <ItemsControl ItemsSource="{Binding Chess.Board.Squares}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Width="400" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Width="50" Height="50">
-                                            <Grid.Style>
-                                                <Style>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Color, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Value="White">
-                                                            <Setter Property="Grid.Background" Value="#E1C699"></Setter>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Color, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Value="Black">
-                                                            <Setter Property="Grid.Background" Value="#0E1111"></Setter>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Grid.Style>
-                                            <!--<ContentPresenter Grid.Row="0" Style="{StaticResource PiecePresenter}" Content="{Binding}"/>-->
-                                            <Button Style="{StaticResource BoardButtonStyle}">
-                                                <Image Width="50" Height="50" Source="{Binding Piece.Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
-                                            </Button>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </Border>
-                    </WrapPanel>
+                        <WrapPanel Margin="25 25 0 0">
+                            <Border BorderBrush="Black" BorderThickness="1">
+                                <ItemsControl ItemsSource="{Binding Chess.Board.Squares}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Width="400" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Width="50" Height="50">
+                                                <Grid.Style>
+                                                    <Style>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Color, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Value="White">
+                                                                <Setter Property="Grid.Background" Value="#E1C699"></Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Color, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Value="Black">
+                                                                <Setter Property="Grid.Background" Value="#0E1111"></Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+                                                <!--<ContentPresenter Grid.Row="0" Style="{StaticResource PiecePresenter}" Content="{Binding}"/>-->
+                                                <Button Style="{StaticResource BoardButtonStyle}">
+                                                    <Image Width="50" Height="50" Source="{Binding Piece.Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
+                                                </Button>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Border>
+                        </WrapPanel>
+                    </Grid>
+                </Border>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <local:PlayerView DataContext="{Binding PlayerModel1}" Background="#FF787878" Margin="20 20 20 20"></local:PlayerView>
+                    <local:PlayerView DataContext="{Binding PlayerModel2}" Background="#FF787878" Margin="20 20 20 20" Grid.Row="1"></local:PlayerView>
                 </Grid>
-            </Border>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <local:PlayerView DataContext="{Binding PlayerModel1}" Background="#FF787878" Margin="20 20 20 20"></local:PlayerView>
-                <local:PlayerView DataContext="{Binding PlayerModel2}" Background="#FF787878" Margin="20 20 20 20" Grid.Row="1"></local:PlayerView>
             </Grid>
-        </Grid>
+        </DockPanel>
         <local:GameOverView Background="{StaticResource TransparentWhite}">
             <local:GameOverView.Style>
                 <Style TargetType="local:GameOverView">

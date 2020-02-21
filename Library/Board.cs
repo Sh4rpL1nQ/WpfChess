@@ -17,6 +17,25 @@ namespace Library
             Squares = new ObservableCollection<Square>();
         }
 
+        public void MakeBoard()
+        {
+            Color toggle = Color.White;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    Squares.Add(new Square() { Point = new Point(j, i) });
+
+                    Squares.Last().Color = toggle;
+
+                    if (j != 7)
+                        toggle = toggle == Color.White ? Color.Black : Color.White;
+                }
+            }
+        }
+
+        public Color TopColor { get; set; }
+
         public Piece IsKingChecked(Color turn)
         {
             var enemyPieces = GetAllPiecesByColor(GetOtherColor(turn));
@@ -70,9 +89,9 @@ namespace Library
 
         public event EventHandler OnInitiatePawnPromotion;
 
-        public Color GetOtherColor(Color player)
+        public Color GetOtherColor(Color color)
         {
-            return (player == Color.White) ? Color.Black : Color.White;
+            return (color == Color.White) ? Color.Black : Color.White;
         }
 
         public Piece GetKing(Color turn)

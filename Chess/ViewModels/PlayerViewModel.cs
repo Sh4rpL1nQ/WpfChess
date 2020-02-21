@@ -71,7 +71,6 @@ namespace Chess.ViewModels
         {
             ResetTimer();
             Player.LostPieces.Clear();
-            Player.ShowPossibleMoves = false;
             Player.IsMyTurn = false;
         }
 

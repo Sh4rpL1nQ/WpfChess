@@ -30,5 +30,11 @@ namespace LibraryTest
 
             Assert.IsTrue(board.IsPieceBlocking(piece, square, dir));
         }
+
+        [Test]
+        public void MakeBoardTest()
+        {
+            
+        }
     }
 }

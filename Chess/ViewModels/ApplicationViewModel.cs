@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Input;
 using Library;
+using Microsoft.Win32;
 
 namespace Chess.ViewModels
 {
@@ -21,25 +23,34 @@ namespace Chess.ViewModels
         {
             settings = Serializer.FromXml<ApplicationSettings>(@"..\..\..\..\Library\Xml\Settings.xml");
 
-            Chess = new Game(settings.BoardXmlPath);
+            Chess = new Game(settings);
 
             Chess.Board.OnInitiatePawnPromotion += Board_OnInitiatePawnPromotion;
 
-            PlayerModel1 = new PlayerViewModel(Chess.Board, Color.White, settings.PlayerTimeInMinutes);
+            PlayerModel1 = new PlayerViewModel(Chess.Board, Chess.Board.TopColor, settings.PlayerTimeInMinutes);
             PlayerModel1.Player.UserName = "Player1";
-            PlayerModel2 = new PlayerViewModel(Chess.Board, Color.Black, settings.PlayerTimeInMinutes);
+            PlayerModel2 = new PlayerViewModel(Chess.Board, Chess.Board.GetOtherColor(Chess.Board.TopColor), settings.PlayerTimeInMinutes);
             PlayerModel2.Player.UserName = "Player2";
 
             PlayerModel1.Player.OnGameOver += Player_OnGameOver;
             PlayerModel2.Player.OnGameOver += Player_OnGameOver;
+            PlayerModel1.Player.OnPieceRemoved += Player_OnPieceRemoved;     
+            PlayerModel2.Player.OnPieceRemoved += Player_OnPieceRemoved;
             PlayerModel1.TimeIsOver += Player_OnGameOver; 
             PlayerModel2.TimeIsOver += Player_OnGameOver;
             PlayerModel1.OnPromotionSelected += PlayerModel_OnPromotionSelected; 
             PlayerModel2.OnPromotionSelected += PlayerModel_OnPromotionSelected;
 
+            ImportTxtCommand = new ActionCommand(ImportTxtAction);
+
             SquareCommand = new ActionCommand(SquareAction);
 
-            PlayerModel1.Player.IsMyTurn = true;
+            SetTurnedPlayer();
+        }
+
+        private void Player_OnPieceRemoved(object sender, EventArgs e)
+        {
+            PlayerAtWait.Player.LostPieces.Add(sender as Piece);
         }
 
         private void PlayerModel_OnPromotionSelected(object sender, EventArgs e)
@@ -72,7 +83,31 @@ namespace Chess.ViewModels
             Chess.Reset();
             PlayerModel1.Reset();
             PlayerModel2.Reset();
-            PlayerModel1.Player.IsMyTurn = true;
+            SetTurnedPlayer();
+        }
+
+        public ICommand ImportTxtCommand { get; }
+
+        public void ImportTxtAction(object sender)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Title = "Choose the txt to be converted";
+            dialog.Filter = "Text|*.txt|All|*.*";
+
+            if (dialog.ShowDialog().Value)
+            {
+                var board = Serializer.ImportFromTxt(dialog.FileName);
+                if (board is string)
+                    Message.StartBox(Level.Error, board as string, "An error occured while import of the txt at " + dialog.FileName);
+                else
+                {
+                    Chess.Reset(board as Board);
+                    PlayerModel1.Reset();
+                    PlayerModel2.Reset();
+                    SetTurnedPlayer();
+                }
+                    
+            }
         }
 
         public PlayerViewModel PlayerModel1 { get; set; }
@@ -86,6 +121,16 @@ namespace Chess.ViewModels
         }
 
         public PlayerViewModel PlayerAtTurn => PlayerModel1.Player.IsMyTurn ? PlayerModel1 : PlayerModel2;
+
+        public PlayerViewModel PlayerAtWait => PlayerModel1.Player.IsMyTurn ? PlayerModel2 : PlayerModel1;
+
+        public void SetTurnedPlayer()
+        {
+            if (PlayerModel1.Player.Color == Color.White)
+                PlayerModel1.Player.IsMyTurn = true;
+            else
+                PlayerModel2.Player.IsMyTurn = true;
+        }
 
         public ICommand SquareCommand { get; }
 

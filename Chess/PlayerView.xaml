@@ -35,6 +35,20 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="LostPieceButtonStyle">
+            <Setter Property="Button.BorderThickness" Value="0"></Setter>
+            <Setter Property="Button.Background" Value="Transparent"></Setter>
+            <Setter Property="Button.IsEnabled" Value="False"></Setter>
+            <Setter Property="Button.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid x:Name="root">
         <Grid>
@@ -82,12 +96,12 @@
                         <ItemsControl ItemsSource="{Binding Player.LostPieces}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
+                                    <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Top"></WrapPanel>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Margin="3 3 3 3">
+                                    <Button Margin="3 3 3 3" Style="{StaticResource LostPieceButtonStyle}">
                                         <Image Width="30" Height="30" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
                                     </Button>
                                 </DataTemplate>
