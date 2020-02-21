@@ -71,9 +71,11 @@ How the TXT must be build up.
 
 | Part     | Description |
 | --------- | -------------------- |
-| 1     | Setting the moving direction of each piece |
-| 2     | Setting the type and location of the pieces |
-| 3     | Setting the color of each piece |
+| 1     | [Setting the moving direction of each piece](#part1) |[Setting the color of each piece](#important)
+| 2     | [Setting the type and location of the pieces](#part2) |
+| 3     | [Setting the color of each piece](#part3) |
+
+<a name="part1"/>
 
 #### Which color do the top and bottom pieces have
 The first two values represent the order of the colors. 
@@ -91,6 +93,8 @@ white
 black
 ```
 This means the pieces (Pawns) which will have the color white, will move to the direction of positive y coordinate (from top downwards) and those with the color black, will move to the direction of negativ y coordinate (from bottom upwards).
+
+<a name="part2"/>
 
 #### Where are the pieces located and what type of piece is it
 
@@ -118,6 +122,8 @@ As an example I extracted the matrix of the normal starting board out of the **_
 6 6 6 6 6 6 6 6
 1 2 3 5 4 3 2 1
 ```
+
+<a name="part3"/>
 
 #### What color do the pieces have?
 
