@@ -70,6 +70,7 @@ namespace Library
                 if (square.Point.Equals(end.Point))
                 {
                     var p = board.ShiftPiece(piece, end);
+                    board.CheckPiecePromotable(piece);
                     piece.IsFirstMove = false;
                     if (p != null)
                         LostPieces.Add(p);

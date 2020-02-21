@@ -62,6 +62,14 @@ namespace Library
             return saveEndPiece;
         }
 
+        public void CheckPiecePromotable(Piece piece)
+        {
+            if ((piece is Pawn) && (piece.Point.PosY == 0 || piece.Point.PosY == 7))
+                OnInitiatePawnPromotion?.Invoke(piece, new EventArgs());
+        }
+
+        public event EventHandler OnInitiatePawnPromotion;
+
         public Color GetOtherColor(Color player)
         {
             return (player == Color.White) ? Color.Black : Color.White;

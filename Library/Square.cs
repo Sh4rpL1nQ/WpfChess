@@ -51,13 +51,14 @@ namespace Library
                 RaisePropertyChanged(ref piece, value);
                 if (Point != null && piece != null)
                 {
-                    piece.Point.PosX = Point.PosX;
-                    piece.Point.PosY = Point.PosY;
+                    piece.Point = new Point()
+                    {
+                        PosX = Point.PosX,
+                        PosY = Point.PosY
+                    };
                 }
             }
         }
-
-        public event EventHandler OnPieceChanged;
 
         public bool IsSelected
         {

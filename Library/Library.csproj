@@ -9,6 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Xml\PromotionTest.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Xml\MateTest.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

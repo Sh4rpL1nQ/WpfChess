@@ -8,8 +8,6 @@ namespace Library.Pieces
     {
         private Color color;
 
-        public override event EventHandler UpgradePiece;
-
         public Pawn()
         {
             Directions = new List<Point>
@@ -46,31 +44,16 @@ namespace Library.Pieces
         {
             var dir = ChooseRightDirection(end.Point);
 
-            //not valid
             if (dir == null) return false;
 
-            //attacking move
             if (dir.PosX != 0 && Point.GoToDirection(dir).Equals(end.Point) && end.Piece != null)
-            {
-                CheckPawnPositionForUpgrade(end);
                 return true;
-            }
 
-            //normal move
             var points = Point.AllMovesWithinDirection(end.Point, dir);
             if (dir.PosX == 0 && (points.Count == 1 ^ (points.Count == 2 && IsFirstMove)) && end.Piece == null)
-            {
-                CheckPawnPositionForUpgrade(end);
                 return true;
-            }
 
             return false;
-        }
-
-        private void CheckPawnPositionForUpgrade(Square end)
-        {
-            if (end.Point.PosY == 0 || end.Point.PosY == 7)
-                UpgradePiece?.Invoke(this, new EventArgs());
         }
 
         public override object Clone()

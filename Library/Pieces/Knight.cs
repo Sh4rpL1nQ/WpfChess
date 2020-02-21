@@ -36,22 +36,15 @@ namespace Library.Pieces
             }
         }
 
-        public override event EventHandler UpgradePiece;
-
         public override bool CanBeMovedToSquare(Square end)
         {
             var dir = ChooseRightDirection(end.Point);
 
-            //not valid
             if (dir == null) return false;
 
             var point = Point.GoToDirection(dir);
 
-            //attacking move
-            if (point.Equals(end.Point))
-                return true;
-
-            return false;
+            return point.Equals(end.Point);
         }
 
         public override object Clone()

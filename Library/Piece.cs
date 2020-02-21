@@ -33,8 +33,6 @@ namespace Library
 
         public Point Point { get; set; }
 
-        public abstract event EventHandler UpgradePiece;
-
         public List<Point> Directions { get; set; }
 
         public bool IsFirstMove { get; set; } = true;

@@ -30,7 +30,7 @@
                 <Trigger Property="Button.IsPressed" Value="True">
                     <Setter Property="Button.Background" Value="Green"></Setter>
                 </Trigger>
-                <DataTrigger Binding="{Binding PiecesAreSelectable, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" Value="True">
+                <DataTrigger Binding="{Binding ElementName=root, Path=DataContext.PiecesAreSelectable, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" Value="True">
                     <Setter Property="Button.IsEnabled" Value="True"></Setter>
                 </DataTrigger>
             </Style.Triggers>
@@ -87,7 +87,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Margin="3 3 3 3" Style="{StaticResource BoardButtonStyle}">
+                                    <Button Margin="3 3 3 3">
                                         <Image Width="30" Height="30" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
                                     </Button>
                                 </DataTemplate>
@@ -98,20 +98,32 @@
                         <Grid DockPanel.Dock="Top" Background="#2D2D30" >
                             <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="5 5 5 5" HorizontalAlignment="Center">Promote</TextBlock>
                         </Grid>
-                        <ItemsControl ItemsSource="{Binding Promotables}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Button Margin="6 3 6 3" Style="{StaticResource BoardButtonStyle}">
-                                        <Image Width="30" Height="30" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
-                                    </Button>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                        <Border BorderBrush="Green" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Border.Style>
+                                <Style>
+                                    <Setter Property="Border.BorderThickness" Value="0"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PiecesAreSelectable, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" Value="True">
+                                            <Setter Property="Border.BorderThickness" Value="5"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <ItemsControl ItemsSource="{Binding Promotables}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Margin="6 3 6 3" Style="{StaticResource BoardButtonStyle}">
+                                            <Image Width="30" Height="30" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"></Image>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
                     </DockPanel>
                 </Grid>
                 <DockPanel Grid.Row="1" Margin="10 10 10 10">

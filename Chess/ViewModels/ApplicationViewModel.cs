@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Input;
 using Library;
 
@@ -19,6 +20,8 @@ namespace Chess.ViewModels
         {
             Chess = new Game();
 
+            Chess.Board.OnInitiatePawnPromotion += Board_OnInitiatePawnPromotion;
+
             PlayerModel1 = new PlayerViewModel(Chess.Board, Color.White);
             PlayerModel1.Player.UserName = "Player1";
             PlayerModel2 = new PlayerViewModel(Chess.Board, Color.Black);
@@ -28,10 +31,26 @@ namespace Chess.ViewModels
             PlayerModel2.Player.OnGameOver += Player_OnGameOver;
             PlayerModel1.TimeIsOver += Player_OnGameOver; 
             PlayerModel2.TimeIsOver += Player_OnGameOver;
+            PlayerModel1.OnPromotionSelected += PlayerModel_OnPromotionSelected; 
+            PlayerModel2.OnPromotionSelected += PlayerModel_OnPromotionSelected;
 
             SquareCommand = new ActionCommand(SquareAction);
 
             PlayerModel1.Player.IsMyTurn = true;
+        }
+
+        private void PlayerModel_OnPromotionSelected(object sender, EventArgs e)
+        {
+            var piece = sender as Piece;
+            Chess.Board.Squares.FirstOrDefault(x => x.Point.Equals(PlayerAtTurn.ReceivingPiece.Point)).Piece = piece;
+            PlayerAtTurn.ReceivingPiece = null;
+            ChangeTurns();
+        }
+
+        private void Board_OnInitiatePawnPromotion(object sender, EventArgs e)
+        {
+            var piece = sender as Piece;
+            PlayerAtTurn.ReceivingPiece = piece;
         }
 
         private void Player_OnGameOver(object sender, EventArgs e)
@@ -63,7 +82,7 @@ namespace Chess.ViewModels
             set { RaisePropertyChanged(ref gameOverModel, value); }
         }
 
-        public Player PlayerAtTurn => PlayerModel1.Player.IsMyTurn ? PlayerModel1.Player : PlayerModel2.Player;
+        public PlayerViewModel PlayerAtTurn => PlayerModel1.Player.IsMyTurn ? PlayerModel1 : PlayerModel2;
 
         public ICommand SquareCommand { get; }
 
@@ -73,8 +92,13 @@ namespace Chess.ViewModels
             
             if (selectedSquare != null && !square.Point.Equals(selectedSquare.Point))
             {
-                if (PlayerAtTurn.Move(selectedSquare.Piece, square))
-                    ChangeTurns();
+                if (PlayerAtTurn.Player.Move(selectedSquare.Piece, square))
+                {
+                    if (PlayerAtTurn.ReceivingPiece == null)
+                    {
+                        ChangeTurns();
+                    }
+                }
 
                 ClearSelections();
 
@@ -85,13 +109,13 @@ namespace Chess.ViewModels
 
             ClearSelections();
 
-            if (square.Piece.Color == PlayerAtTurn.Color)
+            if (square.Piece.Color == PlayerAtTurn.Player.Color)
             {
                 square.IsSelected = true;
                 selectedSquare = square;
 
-                if (PlayerAtTurn.ShowPossibleMoves)
-                    PlayerAtTurn.PossibleMoves(selectedSquare.Piece);
+                if (PlayerAtTurn.Player.ShowPossibleMoves)
+                    PlayerAtTurn.Player.PossibleMoves(selectedSquare.Piece);
             }      
         }
 

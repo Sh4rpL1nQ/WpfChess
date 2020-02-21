@@ -16,6 +16,7 @@ namespace Chess.ViewModels
         private string date;
         private TimeSpan startingTime;
         private bool piecesAreSelectable;
+        private Piece selectedPromotion;
 
         public PlayerViewModel(Board board, Color color)
         {
@@ -84,21 +85,35 @@ namespace Chess.ViewModels
         public void ReviveAction(object sender)
         {
             var piece = sender as Piece;
+            OnPromotionSelected?.Invoke(piece, new EventArgs());
             PiecesAreSelectable = false;
-            UpgradeSelected?.Invoke(piece, new EventArgs());
         }
 
         public event EventHandler TimeIsOver;
 
-        public event EventHandler UpgradeSelected;
+        public event EventHandler OnPromotionSelected;
 
         public bool PiecesAreSelectable
         {
             get { return piecesAreSelectable; }
-            set { RaisePropertyChanged(ref piecesAreSelectable, value); }
+            set 
+            { 
+                RaisePropertyChanged(ref piecesAreSelectable, value);
+                if (piecesAreSelectable)
+                    StopTimer();
+            }
         }
 
-        public Piece TargetPiece { get; set; }
+        public Piece ReceivingPiece
+        {
+            get { return selectedPromotion; }
+            set 
+            {
+                RaisePropertyChanged(ref selectedPromotion, value);
+                if (selectedPromotion != null)
+                    PiecesAreSelectable = true;
+            }
+        }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
