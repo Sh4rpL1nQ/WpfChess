@@ -17,9 +17,12 @@ namespace Chess.ViewModels
         private TimeSpan startingTime;
         private bool piecesAreSelectable;
         private Piece selectedPromotion;
+        private int playerTimeInMinutes;
 
-        public PlayerViewModel(Board board, Color color)
+        public PlayerViewModel(Board board, Color color, int playerTimeInMinutes)
         {
+            this.playerTimeInMinutes = playerTimeInMinutes;
+
             Player = new Player(board, color);
 
             Promotables = new ObservableCollection<Piece>();
@@ -30,7 +33,7 @@ namespace Chess.ViewModels
 
             ReviveCommand = new ActionCommand(ReviveAction);
 
-            startingTime = TimeSpan.FromMinutes(5);
+            startingTime = TimeSpan.FromMinutes(playerTimeInMinutes);
             TimeRemaining = startingTime.ToString(@"mm\:ss");
             Date = DateTime.Now.ToShortDateString();
             ResetTimer();
@@ -57,7 +60,7 @@ namespace Chess.ViewModels
         public void ResetTimer()
         {
             timer = new DispatcherTimer();
-            startingTime = TimeSpan.FromMinutes(5);
+            startingTime = TimeSpan.FromMinutes(playerTimeInMinutes);
             TimeRemaining = startingTime.ToString(@"mm\:ss");
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;

@@ -13,18 +13,21 @@ namespace Chess.ViewModels
     {
         private Square selectedSquare;
         private GameOverViewModel gameOverModel;
+        private ApplicationSettings settings;
 
         public Game Chess { get; set; }
 
         public ApplicationViewModel()
         {
-            Chess = new Game();
+            settings = Serializer.FromXml<ApplicationSettings>(@"..\..\..\..\Library\Xml\Settings.xml");
+
+            Chess = new Game(settings.BoardXmlPath);
 
             Chess.Board.OnInitiatePawnPromotion += Board_OnInitiatePawnPromotion;
 
-            PlayerModel1 = new PlayerViewModel(Chess.Board, Color.White);
+            PlayerModel1 = new PlayerViewModel(Chess.Board, Color.White, settings.PlayerTimeInMinutes);
             PlayerModel1.Player.UserName = "Player1";
-            PlayerModel2 = new PlayerViewModel(Chess.Board, Color.Black);
+            PlayerModel2 = new PlayerViewModel(Chess.Board, Color.Black, settings.PlayerTimeInMinutes);
             PlayerModel2.Player.UserName = "Player2";
 
             PlayerModel1.Player.OnGameOver += Player_OnGameOver;

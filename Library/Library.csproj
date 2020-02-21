@@ -18,6 +18,9 @@
     <None Update="Xml\Empty.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Xml\Settings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Xml\Structure.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
