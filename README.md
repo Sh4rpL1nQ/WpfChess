@@ -1,36 +1,46 @@
 # WPF Chess
 
 This is a chess game based on .NET Core 3 and the WPF framework.<br/>
-No other frameworks, repositories or nuget packages were used.</br>
-You can generate custom piece formations and can change all important settings (e.g. time) outside of the application code (XML). 
+You can generate custom piece formations and can change all important settings (e.g. maximum time for the players) outside of the application code (XML file). 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for fun and testing purposes. 
+These instructions will get you a copy of the project and let it run on your local machine for fun and testing purposes. 
 
 ## Table of Contents  
 [Deployment](#deploy)  
-[Change player time](#time) <br/>
-[Make a custom chess board](#custom) 
+[Main Settings](#settings) <br/>
+[Make a custom chess board](#custom) <br/>
+[Important notes](#important)
 
 <a name="deploy"/>
 
 ## Deployment
 
-Just start the thing. If you want to play a fresh game without any custom starting board, simply change the tag _BoardXmlName_ in the settings XML file **_Settings.xml_** (default) to **Structure**. (That will guide the application to use the **_Structure.xml_** file inside the XML folder)
-The location of all XML files (Settings.xml, Structure.xml, all custom boards) are saved under the path:
+In order to start a fresh game without any custom piece formation, simply start the _.exe_ file.
+
+<a name="settings"/>
+
+## Main Settings
+
+The main settings are changeable via XML file. The path to this **_Settings.xml_** is:
 ```
 ..\Chess\Library\Xml\
 ```
-<a name="time"/>
-
-## Change time the players have to play the game
-Simply change the tag _PlayerTimeInMinutes_ in the settings XML file **_Settings.xml_**
+The different settings are:
+| Tag   | Description |
+| --------| --------|
+| Priority  | Name of the TXT file to be loaded, which contains the information about the chess board and its pieces. This file will be loaded, even if the game is over and the formation should switch. |
+| Switch1    | Name of the TXT file to be loaded, which contains the information about the chess board and its pieces. This file will be loaded at first, but only if _Priority_ is not set. Then it alternates with the value of _Switch2_ after the game is over.   |
+| Switch2   | Name of the TXT file to be loaded, which contains the information about the chess board and its pieces. This file will be loaded at second, but only if _Priority_ is not set. Then it alternates with the value of _Switch1_ after the game is over.   |  
+| PlayerTimeInMinutes  | Sets the maximum amount of time every player is allowed to spend on their whole game. No point numbers allowed.  |
 
 <a name="custom"/>
 
 ## Make a custom chess board (custom location of all pieces)
 In the following parts the generation of a custom board is explained. <br/>
+
+<a name="general"/>
 
 ### General Information
 
@@ -45,44 +55,105 @@ The chess board is represented as a list of the object **_Square_** ([x,y]). Eac
 ...
 [0,7] [1,7] [2,0] [3,0] [4,0] [5,0] [6,0] [7,0]
 ```
-Based on the cooardinated you can set the piece you want.
+Based on the cooardinates you can set the prefered piece.
 
 ### Setup
-If you want to generate a custom board, make a copy of **_Empty.xml_** inside the XML path (board structure without pieces) and rename it to whatever you want. Don't forget to to change the _BoardXmlName_ in the settings XML file **_Settings.xml_**, otherwise it will still load the default board.
-
-### Add pieces
-The pieces can be now added to your xml in the following way.<br/>
-Just add the specific piece tag to the square tag you want and define the color of the piece.<br/>
-
-```
-<Square>
-  ...
-  <King>
-    <Color>White</Color>
-  </King>
-</Square>
-```
-**Important!** Don't change the number of squares inside the XML, it should should always be 64, otherwise it wouldn't be chess.<br/><br/>
-
-The following tag names are available.
-
-| Piece   | XML Tag |
+If you want to generate a custom board, make a copy of **_Empty.txt_** inside the XML path (board structure without pieces) and rename it to whatever you want. Don't forget to to change the _Priority_ in the settings XML file **_Settings.xml_**, otherwise it will still load the default board based on _Switch1_. <br/>
+There are three different other TXT files which you can use:
+| Number in TXT   | LookupTable-Value |
 | --------| --------| 
-| King    | King    |
-| Queen   | Queen   |  
-| Bishop  | Bishop  |
-| Knight  | Knight  |
-| Pawn    | Pawn    | 
-| Rook    | Rook    | 
-<br/>
+| Start_White    | Normal starting piece formation with White at the top.  |
+| Start_Black   | Normal starting piece formation with Black at the top.  |  
+| PromotionsTest  | Test board to show working mechanism of promoting a Pawn.  |
 
-Because it's chess, the color of the pieces can only be black or white.<br/><br/>
-**Important!** Don't change the color the something else. The values will be deserialized into an enum of only black and white, not into the System.Drawing.Color type.
+### Construction
+How the TXT must be build up.
 
-| Color     | XML Tag with content |
+| Part     | Description |
 | --------- | -------------------- |
-| White     | <Color>White</Color> |
-| Black     | <Color>Black</Color> |
+| 1     | [Setting the moving direction of each piece](#part1) |[Setting the color of each piece](#important)
+| 2     | [Setting the type and location of the pieces](#part2) |
+| 3     | [Setting the color of each piece](#part3) |
+
+<a name="part1"/>
+
+#### Which color do the top and bottom pieces have
+The first two values represent the order of the colors. 
+| TXT Value     | Piece Color |
+| --------- | -------------------- |
+| White     | White |
+| Black     | Black |
+<br/>
+The first color corresponds to the top and the second color corresponds to the bottom pieces. <br/>
+This is importand in case of the Pawns, because they can only move in the direction of the enemy. Based on the starting side (top, bottom) they have different directions where they can move to.
+Here an example for a potential starting board.
+
+```
+white
+black
+```
+This means the pieces (Pawns) which will have the color white, will move to the direction of positive y coordinate (from top downwards) and those with the color black, will move to the direction of negativ y coordinate (from bottom upwards).
+
+<a name="part2"/>
+
+#### Where are the pieces located and what type of piece is it
+
+This 8x8 matrix represents the chess board described in the [General Settings](#general).<br/>
+The type of piece corresponds to an integer value. You can find them inside the **_LookupTable.txt_**.
+| Number in TXT   | LookupTable-Value |
+| --------| --------| 
+| Rook    | 1    |
+| Knight   | 2   |  
+| Bishop  | 3  |
+| Queen  | 4  |
+| King    | 4    | 
+| Pawn    | 5    | 
+| No piece    | 0    | 
+
+As an example I extracted the matrix of the normal starting board out of the **_Start_White_** with White at the top.
+
+```
+1 2 3 5 4 3 2 1
+6 6 6 6 6 6 6 6
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+6 6 6 6 6 6 6 6
+1 2 3 5 4 3 2 1
+```
+
+<a name="part3"/>
+
+#### What color do the pieces have?
+
+The first two colors in our TXT are responsible to deklare the moving direction of each piece.
+Now we have to assign the colors of our choice to every piece. <br/>
+Therefore riht below our 8x8 matrix, there is another 8x8 matrix for the assigned colors. Every entry with a value greater than 0 must have a number 1 or 2.
+
+| Number in TXT     | Description |
+| --------- | -------------------- |
+| 1     | Corresponds to the color which was declared first |
+| 2     | Corresponds to the color which was declared second |
+
+To complete the example, here is the color assignment of a potential starting board.
+
+```
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+2 2 2 2 2 2 2 2
+2 2 2 2 2 2 2 2
+```
+<a name="important"/>
+
+### Important notes
+**_Most Important:_** There has to be ALWAYS one King of each color, otherwise the game would't make sense
+1. Do not change the amount of numbers in the TXT. Each chess game has 8x8 fields.<br/>
+2. Do not write other colors than black or white. Each chess game has just black and white pieces.
 
 ## Authors
 
