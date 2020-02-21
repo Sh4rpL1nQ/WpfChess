@@ -92,7 +92,6 @@ namespace Library
                 while ((currentLine = reader.ReadLine()) != null)
                 {
                     dic.Add(counter + 1, currentLine);
-
                     counter++;
                 }
             }
@@ -131,13 +130,8 @@ namespace Library
                             int[] array = Array.ConvertAll(currentLine.Split(' '), s => int.Parse(s));
                             board.TopColor = (Color)Enum.Parse(typeof(Color), colors[0]);
                             for (int i = 0; i < array.Length; i++)
-                            {
                                 if (array[i] != 0)
-                                {
                                     board.Squares[initialStep1 + i].Piece = (Piece)Activator.CreateInstance(GetAssemblyByName("Library").GetType("Library.Pieces." + lookup[array[i]]));
-                                }
-
-                            }
 
                             initialStep1 += 8;
                         }
@@ -159,6 +153,8 @@ namespace Library
                                     board.Squares[initialStep2 + i].Piece.Color = board.GetOtherColor(board.TopColor);
                                     board.Squares[initialStep2 + i].Piece.PartOfTopBoard = false;
                                 }
+                                else
+                                    if (board.Squares[initialStep2 + i].Piece != null) throw new Exception("color wasn't set, but there's a piece: reason txt second matrix");
                             }
 
                             initialStep2 += 8;
@@ -167,9 +163,7 @@ namespace Library
                         counter++;
                     }
                 }
-            } catch (Exception e) { 
-                return e.Message; }
-
+            } catch (Exception e) { return e.Message; }
             return board;
         }
     }
