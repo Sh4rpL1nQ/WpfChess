@@ -9,13 +9,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Deployment
 
-Just start the thing. If you want to play a fresh game without any custom starting board, simply change the path in class **_Game.cs_** to the **_Structure.xml_**. If you have added a custom starting board, simply change the path:
-```
-var board = Serializer.FromXml<Board>(@"..\..\..\..\Library\Xml\Structure.xml");
-```
+Just start the thing. If you want to play a fresh game without any custom starting board, simply change the tag _BoardXmlName_ in the settings XML file **_Settings.xml_** (default) to **Structure**. (That will guide the application to use the **_Structure.xml_** file inside the XML folder)
 ### Representation of the chess board
 
-The chess board is represented as a list of the object **_Square_** ([x,y]). Each **_Square_** has a unique Point with coordinates.
+The chess board is represented as a list of the object **_Square_** ([x,y]). Each **_Square_** has a unique **_Point_** with coordinates.
 ```
 [0,0] [1,0] [2,0] [3,0] [4,0] [5,0] [6,0] [7,0]
 [0,1] [1,1] [2,1] [3,1] [4,1] [5,1] [6,1] [7,1]
@@ -26,19 +23,22 @@ The chess board is represented as a list of the object **_Square_** ([x,y]). Eac
 ...
 [0,7] [1,7] [2,0] [3,0] [4,0] [5,0] [6,0] [7,0]
 ```
-### Make a custom chess board
-You can make a custom chess board. Here you can change the starting formation of the pieces as you want without touching the code. Just add a XML file to the folowing location:
+Based on the cooardinated you can set the piece you want.
+
+### Make a custom chess board (custom location of all pieces)
+In the following parts the generation of a custom board is explained. <br/>
+The location of all XML files (Settings.xml, Structure.xml, all custom boards) are saved under the path:
 ```
-Chess\Library\Xml\
-```
-The XML construction plan is presented in the empty board file without any pieces. Feel free to make a copy and generate your own endgame situation by adding the pieces at the prefered location:
-```
-Chess\Library\Xml\Empty.xml
+..\Chess\Library\Xml\
 ```
 
-The pieces can be added to the xml in the following way.<br/>
+#### Setup
+If you want to generate a custom board, make a copy of **_Empty.xml_** inside the XML path (board structure without pieces) and rename it to whatever you want. Don't forget to to change the _BoardXmlName_ in the settings XML file **_Settings.xml_**, otherwise it will still load the default board.
+
+#### Add pieces
+The pieces can be now added to your xml in the following way.<br/>
 Just add the specific piece tag to the square tag you want and define the color of the piece.<br/>
-**Important!** Don't change the number of squares inside the XML, it should should always be 64, otherwise it wouldn't be chess.
+
 ```
 <Square>
   ...
@@ -47,16 +47,26 @@ Just add the specific piece tag to the square tag you want and define the color 
   </King>
 </Square>
 ```
+**Important!** Don't change the number of squares inside the XML, it should should always be 64, otherwise it wouldn't be chess.<br/><br/>
+
 The following tag names are available.
 
-| Pieces   | 
-| ---------| 
-| King     |
-| Queen    |  
-| Bishop   | 
-| Knight   | 
-| Pawn     | 
-| Rook     | 
+| Piece   | XML Tag |
+| --------| --------| 
+| King    | King    |
+| Queen   | Queen   |  
+| Bishop  | Bishop  |
+| Knight  | Knight  |
+| Pawn    | Pawn    | 
+| Rook    | Rook    | 
+
+Because it's chess, the color of the pieces can only be black or white.<br/><br/>
+**Important!** Don't change the color the something else. The values will be deserialized into an enum of only black and white, not into the System.Drawing.Color type.
+
+| Color     | XML Tag with content |
+| --------- | -------------------- |
+| White     | <Color>White</Color> |
+| Black     | <Color>Black</Color> |
 
 ## Authors
 
