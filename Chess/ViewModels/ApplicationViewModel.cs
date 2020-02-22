@@ -40,7 +40,10 @@ namespace Chess.ViewModels
             PlayerModel2.TimeIsOver += Player_OnGameOver;
 
             PlayerModel1.Player.OnPieceRemoved += Player_OnPieceRemoved;     
-            PlayerModel2.Player.OnPieceRemoved += Player_OnPieceRemoved;            
+            PlayerModel2.Player.OnPieceRemoved += Player_OnPieceRemoved;
+
+            PlayerModel1.Player.OnCastlePossible += Player_OnCastlePossible;
+            PlayerModel2.Player.OnCastlePossible += Player_OnCastlePossible;
 
             PlayerModel1.OnPromotionSelected += PlayerModel_OnPromotionSelected; 
             PlayerModel2.OnPromotionSelected += PlayerModel_OnPromotionSelected;
@@ -94,6 +97,13 @@ namespace Chess.ViewModels
         private void Player_OnPieceRemoved(object sender, EventArgs e)
         {
             PlayerAtWait.Player.LostPieces.Add(sender as Piece);
+        }
+
+        private void Player_OnCastlePossible(object sender, EventArgs e)
+        {
+            var res = Message.StartBox(Level.Question, "Do you want to castle?", "Castle possible");
+            if (res == System.Windows.MessageBoxResult.Yes)
+                PlayerAtTurn.Player.ExecuteCastle(sender as List<Square>);
         }
 
         private void PlayerModel_OnPromotionSelected(object sender, EventArgs e)

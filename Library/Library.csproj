@@ -9,6 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Txt\CastleTestBottom.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Txt\CastleTestTop.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Txt\Start_White.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

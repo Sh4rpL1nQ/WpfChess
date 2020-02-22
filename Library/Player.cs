@@ -71,6 +71,14 @@ namespace Library
             {
                 if (square.Point.Equals(end.Point))
                 {
+                    if (piece is Rook)
+                    {
+                        var squares = CanCastle(piece);
+                        if (squares != null && squares.Count != 0)
+                            if (squares[0].Point.Equals(end.Point))
+                                OnCastlePossible?.Invoke(squares, new EventArgs());
+                            
+                    }
                     var p = board.ShiftPiece(piece, end);
                     board.CheckPiecePromotable(piece);
                     piece.IsFirstMove = false;
@@ -82,6 +90,44 @@ namespace Library
             }
 
             return false;
+        }
+
+        public event EventHandler OnCastlePossible;
+
+        public List<Square> CanCastle(Piece rook)
+        {
+            var king = board.GetKing(rook.Color);
+            var squares = new List<Square>();
+            if (rook.IsFirstMove && king.IsFirstMove)
+            {
+                var clone = board.Clone() as Board;
+                var dir = king.ChooseRightDirection(rook.Point);
+                var allMoves = king.Point.AllMovesWithinDirection(rook.Point, dir).Take(2);
+                foreach (var move in allMoves)
+                {
+                    var end = clone.Squares.FirstOrDefault(x => x.Point.Equals(move));
+                    clone.ShiftPiece(clone.GetKing(king.Color), end);
+                    if (clone.IsKingChecked(rook.Color) != null) 
+                        return null;
+
+                    squares.Add(board.Squares.FirstOrDefault(x => x.Point.Equals(move)));
+                }
+
+                return squares;
+            }
+
+            return null;
+        }
+
+        public void ExecuteCastle(List<Square> square)
+        {
+            var king = board.GetKing(Color);
+            var clone = CheckPredictionBoard(king, square[1]);
+            if (clone.IsKingChecked(king.Color) == null)
+            {
+                board.Squares.FirstOrDefault(x => x.Point.Equals(king.Point)).Piece = null;
+                square[1].Piece = king;
+            }            
         }
 
         public event EventHandler OnPieceRemoved;
