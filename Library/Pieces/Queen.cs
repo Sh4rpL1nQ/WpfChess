@@ -38,11 +38,7 @@ namespace Library.Pieces
 
         public override bool CanBeMovedToSquare(Square end)
         {
-            var dir = ChooseRightDirection(end.Point);
-
-            if (dir == null) return false;
-
-            return true;
+            return ChooseRightDirection(end.Point) != null;
         }
 
         public override object Clone()

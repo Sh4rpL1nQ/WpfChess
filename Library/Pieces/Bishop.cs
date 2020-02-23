@@ -26,17 +26,14 @@ namespace Library.Pieces
             get { return color; }
             set
             {
-                color = value;
-                if (Color == Color.White)
+                if ((color = value) == Color.White)
                     Image = @"Images\Bishop_W.png";
             }
         }
 
         public override bool CanBeMovedToSquare(Square end)
         {
-            var dir = ChooseRightDirection(end.Point);
-
-            return dir != null;
+            return ChooseRightDirection(end.Point) != null;
         }
 
         public override object Clone()
