@@ -31,6 +31,7 @@ namespace Library
             set { RaisePropertyChanged(ref color, value); }
         }
 
+        [XmlIgnore]
         public bool IsPossibileSquare
         { 
             get { return isPossibileSquare; } 
@@ -60,6 +61,7 @@ namespace Library
             }
         }
 
+        [XmlIgnore]
         public bool IsSelected
         {
             get { return isSelected; }

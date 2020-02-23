@@ -144,9 +144,9 @@
                     <Grid DockPanel.Dock="Top" Background="#2D2D30" >
                         <TextBlock FontWeight="Bold" Foreground="#FFDF66" Margin="5 5 5 5" HorizontalAlignment="Center">Settings</TextBlock>
                     </Grid>
-                    <StackPanel>
-                        <CheckBox Content="Show possible moves" IsChecked="{Binding Player.ShowPossibleMoves, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
-                    </StackPanel>
+                    <Grid HorizontalAlignment="Stretch" Background="#2D2D30" VerticalAlignment="Top">
+                        <CheckBox Margin="5 5 5 5" Content="Show possible moves" IsChecked="{Binding Player.ShowPossibleMoves, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                    </Grid>
                 </DockPanel>
             </Grid>
         </Grid>

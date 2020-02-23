@@ -17,7 +17,7 @@ namespace Chess.ViewModels
         private GameOverViewModel gameOverModel;
         private ApplicationSettings settings;        
         private Square selectedSquare;
-        private string settingsPath = @"..\..\..\..\Library\Xml\Settings.xml";
+        private string settingsPath = DirectoryInfos.GetPath("Settings.xml");
         #endregion
 
         #region Constructors
@@ -49,6 +49,8 @@ namespace Chess.ViewModels
             PlayerModel2.OnPromotionSelected += PlayerModel_OnPromotionSelected;
 
             ImportTxtCommand = new ActionCommand(ImportTxtAction);
+            ImportXmlCommand = new ActionCommand(ImportXmlAction);
+            ExportXmlCommand = new ActionCommand(ExportXmlAction);
 
             SquareCommand = new ActionCommand(SquareAction);
 
@@ -74,6 +76,10 @@ namespace Chess.ViewModels
         public PlayerViewModel PlayerAtWait => PlayerModel1.Player.IsMyTurn ? PlayerModel2 : PlayerModel1;
 
         public ICommand ImportTxtCommand { get; }
+
+        public ICommand ImportXmlCommand { get; }
+
+        public ICommand ExportXmlCommand { get; }
 
         public ICommand SquareCommand { get; }
         #endregion
@@ -156,22 +162,76 @@ namespace Chess.ViewModels
         public void ImportTxtAction(object sender)
         {
             var dialog = new OpenFileDialog();
-            dialog.Title = "Choose the txt to be converted";
+            dialog.Title = "Choose the TXT file to be imported";
             dialog.Filter = "Text|*.txt|All|*.*";
 
             if (dialog.ShowDialog().Value)
             {
-                var board = Serializer.ImportFromTxt(dialog.FileName);
-                if (board is string)
-                    Message.StartBox(Level.Error, board as string, "An error occured while import of the txt at " + dialog.FileName);
-                else
-                {
-                    Chess.Reset(board as Board);
+                Board board = null;
+                try 
+                { 
+                    board = Serializer.ImportFromTxt(dialog.FileName);
+                    Chess.Reset(board);
                     PlayerModel1.Reset();
                     PlayerModel2.Reset();
                     SetTurnedPlayer();
+                    Message.StartBox(Level.Info, "Your board has successfully been imported and is ready to use", "Export Successful");
+                }
+                catch (Exception e ) 
+                { 
+                    Message.StartBox(Level.Error, e.Message, "Import Error"); 
+                    return; 
+                }
+            }
+        }
+
+        public void ImportXmlAction(object sender)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Title = "Choose the XML file to be imported";
+            dialog.Filter = "XML|*.xml|All|*.*";
+            if (dialog.ShowDialog().Value)
+            {
+                try
+                {
+                    
+                }
+                catch (Exception e)
+                {
+                    Message.StartBox(Level.Error, e.Message, "Import Error");
+                    return;
                 }
 
+                Board board = Serializer.FromXml<Board>(dialog.FileName);
+                board.Squares = board.Squares.Skip(64).ToObservableCollection();
+                Chess.Reset(board);
+                PlayerModel1.Reset();
+                PlayerModel2.Reset();
+                SetTurnedPlayer();
+                Message.StartBox(Level.Info, "Your board has successfully been imported and is ready to use", "Export Successful");
+
+            }
+        }
+
+        public void ExportXmlAction(object sender)
+        {
+            var dialog = new SaveFileDialog();
+            dialog.Title = "Choose the saving location of your board";
+            dialog.Filter = "XML|*.xml|All|*.*";
+            dialog.DefaultExt = ".xml";
+
+            if (dialog.ShowDialog().Value)
+            {
+                try
+                {
+                    Chess.Board.ToXml(dialog.FileName);
+                    Message.StartBox(Level.Info, "Your board has successfully been exported to: " + dialog.FileName, "Export Successful");
+                }
+                catch (Exception e)
+                {
+                    Message.StartBox(Level.Error, e.Message, "Export Error");
+                    return;
+                }
             }
         }
         #endregion

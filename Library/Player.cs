@@ -96,7 +96,7 @@ namespace Library
 
         public List<Square> CanCastle(Piece rook)
         {
-            var king = board.GetKing(rook.Color);
+            var king = board.GetKingByColor(rook.Color);
             var squares = new List<Square>();
             if (rook.IsFirstMove && king.IsFirstMove)
             {
@@ -106,7 +106,7 @@ namespace Library
                 foreach (var move in allMoves)
                 {
                     var end = clone.Squares.FirstOrDefault(x => x.Point.Equals(move));
-                    clone.ShiftPiece(clone.GetKing(king.Color), end);
+                    clone.ShiftPiece(clone.GetKingByColor(king.Color), end);
                     if (clone.IsKingChecked(rook.Color) != null) 
                         return null;
 
@@ -121,8 +121,8 @@ namespace Library
 
         public void ExecuteCastle(List<Square> square)
         {
-            var king = board.GetKing(Color);
-            var clone = CheckPredictionBoard(king, square[1]);
+            var king = board.GetKingByColor(Color);
+            var clone = board.CheckPredictionBoard(king, square[1]);
             if (clone.IsKingChecked(king.Color) == null)
             {
                 board.Squares.FirstOrDefault(x => x.Point.Equals(king.Point)).Piece = null;
@@ -134,7 +134,7 @@ namespace Library
 
         public GameOver IsCheckMate()
         {
-            var king = board.GetKing(Color);
+            var king = board.GetKingByColor(Color);
             var enemyPiece = board.IsKingChecked(Color);
             var moves = CalcPossibleMoves(king);
             if (enemyPiece != null)
@@ -190,7 +190,7 @@ namespace Library
                     var square = board.Squares.FirstOrDefault(x => x.Point.Equals(end));
                     if (piece.CanMoveWithoutColliding(square, board))
                     {
-                        var clonedBoard = CheckPredictionBoard(piece, square);
+                        var clonedBoard = board.CheckPredictionBoard(piece, square);
                         if (clonedBoard.IsKingChecked(Color) == null)
                             res.Add(square);
                     }
@@ -198,13 +198,6 @@ namespace Library
             }
 
             return res;
-        }
-
-        private Board CheckPredictionBoard(Piece piece, Square end)
-        {
-            var clone = board.Clone() as Board;
-            clone.ShiftPiece(piece, end);
-            return clone;
         }
     }
 }

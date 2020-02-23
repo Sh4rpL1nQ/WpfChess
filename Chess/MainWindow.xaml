@@ -57,7 +57,9 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="Options">
-                    <MenuItem Header="Import" Command="{Binding ImportTxtCommand}"></MenuItem>
+                    <MenuItem Header="Import TXT" Command="{Binding ImportTxtCommand}"></MenuItem>
+                    <MenuItem Header="Import XML" Command="{Binding ImportXmlCommand}"></MenuItem>
+                    <MenuItem Header="Export Board (XML)" Command="{Binding ExportXmlCommand}"></MenuItem>
                 </MenuItem>
             </Menu>
             <Grid>

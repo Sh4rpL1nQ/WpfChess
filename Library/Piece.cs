@@ -19,6 +19,7 @@ namespace Library
         private Color color;
         private string image;
 
+        [XmlIgnore]
         public string Image
         {
             get { return image; }
@@ -33,6 +34,7 @@ namespace Library
 
         public Point Point { get; set; }
 
+        [XmlIgnore]
         public List<Point> Directions { get; set; }
 
         public virtual bool PartOfTopBoard { get; set; }
@@ -89,16 +91,5 @@ namespace Library
         {
             return Clone();
         }
-    }
-
-    public enum PieceType
-    {
-        None,
-        King,
-        Queen,
-        Pawn,
-        Bishop,
-        Knight,
-        Rook
     }
 }

@@ -25,21 +25,14 @@ namespace Library
             Board.Squares.Clear();
             if (settings.Priority != string.Empty)
             {
-                var board = Serializer.ImportFromTxt(settings.BoardXmlPathPriority) as Board;
-                FillBoard(board);
+                GenerateBoard(settings.BoardXmlPathPriority);
                 return;
             }
 
             if (Board.TopColor == Color.White || init)
-            {
-                var board = Serializer.ImportFromTxt(settings.BoardXmlPathSwitch1) as Board;
-                FillBoard(board);
-            }
+                GenerateBoard(settings.BoardXmlPathSwitch1);
             else
-            {
-                var board = Serializer.ImportFromTxt(settings.BoardXmlPathSwitch2) as Board;
-                FillBoard(board);
-            }            
+                GenerateBoard(settings.BoardXmlPathSwitch2);    
         }
 
         public void Reset(Board board)
@@ -52,6 +45,12 @@ namespace Library
         {
             foreach (var square in board.Squares)
                 Board.Squares.Add(square);
+        }
+
+        private void GenerateBoard(string path)
+        {
+            var board = Serializer.ImportFromTxt(settings.BoardXmlPathSwitch2) as Board;
+            FillBoard(board);
         }
     }
 }

@@ -11,26 +11,26 @@ namespace Library
     public class Board : PropertyChangedBase, ICloneable
     {
         private Color topColor;
+        public static int BoardSize = 8;
 
         public ObservableCollection<Square> Squares { get; set; }
 
         public Board()
-        {
-            Squares = new ObservableCollection<Square>();
+        {            
+            MakeBoard();
         }
 
-        public void MakeBoard()
+        private void MakeBoard()
         {
+            Squares = new ObservableCollection<Square>();
             Color toggle = Color.White;
-            for (int i = 0; i < 8; i++)
+            for (int y = 0; y < BoardSize; y++)
             {
-                for (int j = 0; j < 8; j++)
+                for (int x = 0; x < BoardSize; x++)
                 {
-                    Squares.Add(new Square() { Point = new Point(j, i) });
-
+                    Squares.Add(new Square() { Point = new Point(x, y) });
                     Squares.Last().Color = toggle;
-
-                    if (j != 7)
+                    if (x != BoardSize - 1)
                         toggle = toggle == Color.White ? Color.Black : Color.White;
                 }
             }
@@ -45,7 +45,7 @@ namespace Library
         public Piece IsKingChecked(Color turn)
         {
             var enemyPieces = GetAllPiecesByColor(GetOtherColor(turn));
-            var playerKingSquare = Squares.FirstOrDefault(x => x.Point.Equals(GetKing(turn).Point));
+            var playerKingSquare = Squares.FirstOrDefault(x => x.Point.Equals(GetKingByColor(turn).Point));
 
             foreach (var enemyPiece in enemyPieces)
             {
@@ -67,10 +67,8 @@ namespace Library
             allDirs.Remove(allDirs.Last());
 
             foreach (var p in allPieces)
-            {
                 if (allDirs.FirstOrDefault(x => x.Equals(p.Point)) != null)
                     return true;
-            }
 
             return false;
         }
@@ -100,7 +98,7 @@ namespace Library
             return (color == Color.White) ? Color.Black : Color.White;
         }
 
-        public Piece GetKing(Color turn)
+        public Piece GetKingByColor(Color turn)
         {
             var allPieces = GetAllPiecesByColor(turn);
 
@@ -120,6 +118,13 @@ namespace Library
                 pieces.Add(s.Piece);
 
             return pieces;
+        }
+
+        public Board CheckPredictionBoard(Piece piece, Square end)
+        {
+            var clone = Clone() as Board;
+            clone.ShiftPiece(piece, end);
+            return clone;
         }
 
         public object Clone()

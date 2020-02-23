@@ -14,13 +14,13 @@ namespace Library
         private int playerTimeInMinutes;
 
         [XmlIgnore]
-        public string BoardXmlPathSwitch1 => @"..\..\..\..\Library\Txt\" + Switch1 + ".txt";
+        public string BoardXmlPathSwitch1 => DirectoryInfos.GetPath(Switch1 + ".txt");
 
         [XmlIgnore]
-        public string BoardXmlPathSwitch2 => @"..\..\..\..\Library\Txt\" + Switch2 + ".txt";
+        public string BoardXmlPathSwitch2 => DirectoryInfos.GetPath(Switch2 + ".txt");
 
         [XmlIgnore]
-        public string BoardXmlPathPriority => @"..\..\..\..\Library\Txt\" + Priority + ".txt";
+        public string BoardXmlPathPriority => DirectoryInfos.GetPath(Priority + ".txt");
 
         public string Switch1
         {

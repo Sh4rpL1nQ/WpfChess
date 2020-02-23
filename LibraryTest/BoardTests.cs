@@ -21,7 +21,7 @@ namespace LibraryTest
         [Test]
         public void IsPieceBlockingYes()
         {
-            board = Serializer.FromXml<Board>(@"..\..\..\..\LibraryTest\Xml\PieceBlocking.xml");
+            board = Serializer.FromXml<Board>(DirectoryInfos.GetPath("PieceBlocking.xml"));
 
             var piece = board.Squares.FirstOrDefault(x => x.Piece is Bishop)?.Piece;
             var square = board.Squares.FirstOrDefault(x => x.Piece is Knight);
