@@ -11,6 +11,7 @@ These instructions will get you a copy of the project and let it run on your loc
 [Deployment](#deploy)  
 [Main Settings](#settings) <br/>
 [Make a custom chess board](#custom) <br/>
+[Load and export chess board](#xml) <br/>
 [Important notes](#important)
 
 <a name="deploy"/>
@@ -148,6 +149,14 @@ To complete the example, here is the color assignment of a potential starting bo
 2 2 2 2 2 2 2 2
 2 2 2 2 2 2 2 2
 ```
+
+<a name="xml"/>
+
+## Save your current board
+In addition to load a prebuild txt file, you are now able to load already played (and not finished) boards via XML file.
+To archieve this, simply choose "Options" in the menu bar and click on _Export Board (XML)_. Then you can name your file and put it everywhere you want. <br/><br/>
+When you've saved the current board state into the XML file, you can can continue playing it, whenever you want, by pressing the _Import Board (XML)_ option in the top menu. Here you can select your XML to be deserialized into the board object.
+
 <a name="important"/>
 
 ### Important notes
