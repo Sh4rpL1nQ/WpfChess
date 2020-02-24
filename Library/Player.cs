@@ -67,7 +67,7 @@ namespace Library
 
         public bool Move(Piece piece, Square end)
         {
-            foreach (var square in CalcPossibleMoves(piece))
+            foreach (var square in board.CalcPossibleMoves(piece))
             {
                 if (square.Point.Equals(end.Point))
                 {
@@ -136,7 +136,7 @@ namespace Library
         {
             var king = board.GetKingByColor(Color);
             var enemyPiece = board.IsKingChecked(Color);
-            var moves = CalcPossibleMoves(king);
+            var moves = board.CalcPossibleMoves(king);
             if (enemyPiece != null)
             {                
                 var enemyPieces = board.GetAllPiecesByColor(Color).Where(x => !(x is King));                
@@ -163,7 +163,7 @@ namespace Library
             {
                 foreach (var piece in board.GetAllPiecesByColor(Color))
                 {
-                    if (CalcPossibleMoves(piece).Count != 0)
+                    if (board.CalcPossibleMoves(piece).Count != 0)
                         return GameOver.None;
                 }
 
@@ -173,31 +173,10 @@ namespace Library
 
         public void PossibleMoves(Piece piece)
         {
-            var all = CalcPossibleMoves(piece);
+            var all = board.CalcPossibleMoves(piece);
             foreach (var square in all)
                 if (ShowPossibleMoves)
                     square.IsPossibileSquare = true;
-        }
-
-        public List<Square> CalcPossibleMoves(Piece piece)
-        {
-            var res = new List<Square>();
-            foreach (var dir in piece.Directions)
-            {
-                var allMoves = piece.Point.AllMovesWithinDirection(dir);
-                foreach (var end in allMoves)
-                {
-                    var square = board.Squares.FirstOrDefault(x => x.Point.Equals(end));
-                    if (piece.CanMoveWithoutColliding(square, board))
-                    {
-                        var clonedBoard = board.CheckPredictionBoard(piece, square);
-                        if (clonedBoard.IsKingChecked(Color) == null)
-                            res.Add(square);
-                    }
-                }
-            }
-
-            return res;
         }
     }
 }

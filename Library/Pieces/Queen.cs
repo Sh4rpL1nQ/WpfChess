@@ -36,6 +36,8 @@ namespace Library.Pieces
             }
         }
 
+        public override int Weight => 90;
+
         public override bool CanBeMovedToSquare(Square end)
         {
             return ChooseRightDirection(end.Point) != null;

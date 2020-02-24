@@ -32,6 +32,9 @@ namespace Library
             set { RaisePropertyChanged(ref color, value); }
         }
 
+        [XmlIgnore]
+        public virtual int Weight { get; }
+
         public Point Point { get; set; }
 
         [XmlIgnore]

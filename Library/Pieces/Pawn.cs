@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Library.Pieces
@@ -47,6 +48,8 @@ namespace Library.Pieces
                     Image = @"Images\Pawn_W.png";
             }
         }
+
+        public override int Weight => 10;
 
         public override bool CanBeMovedToSquare(Square end)
         {

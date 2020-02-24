@@ -127,6 +127,27 @@ namespace Library
             return clone;
         }
 
+        public List<Square> CalcPossibleMoves(Piece piece)
+        {
+            var res = new List<Square>();
+            foreach (var dir in piece.Directions)
+            {
+                var allMoves = piece.Point.AllMovesWithinDirection(dir);
+                foreach (var end in allMoves)
+                {
+                    var square = Squares.FirstOrDefault(x => x.Point.Equals(end));
+                    if (piece.CanMoveWithoutColliding(square, this))
+                    {
+                        var clonedBoard = CheckPredictionBoard(piece, square);
+                        if (clonedBoard.IsKingChecked(piece.Color) == null)
+                            res.Add(square);
+                    }
+                }
+            }
+
+            return res;
+        }
+
         public object Clone()
         {
             Board board = new Board();
