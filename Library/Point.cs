@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Library
 {
     public class Point : ICloneable
     {
+        private string[] letters = new string[] { "A", "B", "C", "D", "E", "F", "G", "H" };
+
         public int PosX { get; set; }
 
         public int PosY { get; set; }
@@ -18,14 +19,15 @@ namespace Library
 
         public Point()
         {
-                
+
         }
 
         public Point GoToDirection(Point point)
         {
-            if (point == null) return null;
+            if (point == null)
+                return null;
 
-            var res = new Point() { PosX = PosX + point.PosX, PosY = PosY + point.PosY };
+            var res = this + point;
             if (res.IsInsideTheBoard())
                 return res;
             else
@@ -51,7 +53,7 @@ namespace Library
                 start = start.GoToDirection(dir);
                 list.Add(start);
             }
-              
+
             return list;
         }
 
@@ -61,7 +63,7 @@ namespace Library
             var start = new Point(PosX, PosY);
 
             while (start != null && start.IsInsideTheBoard())
-            {              
+            {
                 start = start.GoToDirection(dir);
 
                 if (start != null && start.IsInsideTheBoard())
@@ -74,7 +76,7 @@ namespace Library
         public bool IsInDirection(Point end, Point dir)
         {
             var start = new Point(PosX, PosY);
-            while(!start.Equals(end) && start.IsInsideTheBoard())
+            while (!start.Equals(end) && start.IsInsideTheBoard())
             {
                 if (start.Equals(end))
                     return true;
@@ -96,6 +98,17 @@ namespace Library
             var point = obj as Point;
             return PosX == point.PosX && PosY == point.PosY;
         }
+
+        public override string ToString()
+        {
+            return letters[PosX] + (Board.BoardSize - PosY);
+        }
+
+        public static Point operator +(Point b, Point c)
+        {
+            return new Point(b.PosX + c.PosX, b.PosY + c.PosY);
+        }
+
 
         public object Clone()
         {

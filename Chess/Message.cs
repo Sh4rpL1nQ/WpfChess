@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Chess
 {
     public class Message
     {
-        private static Dictionary<Level, Func<string, string, MessageBoxResult>> decider 
+        private static Dictionary<Level, Func<string, string, MessageBoxResult>> decider
             = new Dictionary<Level, Func<string, string, MessageBoxResult>>() {
             { Level.Question, ShowQuestion },
             { Level.Warning, ShowWarning },

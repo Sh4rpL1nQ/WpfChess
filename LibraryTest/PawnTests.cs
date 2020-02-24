@@ -1,9 +1,6 @@
 ﻿using Library;
 using Library.Pieces;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LibraryTest
 {
@@ -18,7 +15,7 @@ namespace LibraryTest
             start = new Square();
             start.Piece = new Pawn();
 
-            end = new Square();   
+            end = new Square();
         }
 
         [Test]

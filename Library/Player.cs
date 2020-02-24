@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 
 namespace Library
 {
@@ -19,14 +18,14 @@ namespace Library
         public Color Color
         {
             get { return color; }
-            set  { RaisePropertyChanged(ref color, value); }
+            set { RaisePropertyChanged(ref color, value); }
         }
 
         public bool IsMyTurn
         {
             get { return isMyTurn; }
-            set 
-            { 
+            set
+            {
                 RaisePropertyChanged(ref isMyTurn, value);
                 if (isMyTurn)
                 {
@@ -41,7 +40,7 @@ namespace Library
                             break;
                         default: break;
                     }
-                }                                  
+                }
             }
         }
 
@@ -50,6 +49,8 @@ namespace Library
             get { return showPossibleMoves; }
             set { RaisePropertyChanged(ref showPossibleMoves, value); }
         }
+
+        public int MoveCounter { get; set; } = 0;
 
         public event EventHandler OnGameOver;
 
@@ -67,23 +68,11 @@ namespace Library
 
         public bool Move(Piece piece, Square end)
         {
-            foreach (var square in board.CalcPossibleMoves(piece))
+            foreach (var move in board.CalcPossibleMoves(piece))
             {
-                if (square.Point.Equals(end.Point))
+                if (move.IsEndPosition(end))
                 {
-                    if (piece is Rook)
-                    {
-                        var squares = CanCastle(piece);
-                        if (squares != null && squares.Count != 0)
-                            if (squares[0].Point.Equals(end.Point))
-                                OnCastlePossible?.Invoke(squares, new EventArgs());
-                            
-                    }
-                    var p = board.ShiftPiece(piece, end);
-                    board.CheckPiecePromotable(piece);
-                    piece.IsFirstMove = false;
-                    if (p != null)
-                        OnPieceRemoved?.Invoke(p, new EventArgs());
+                    move.Execute();
 
                     return true;
                 }
@@ -92,45 +81,16 @@ namespace Library
             return false;
         }
 
-        public event EventHandler OnCastlePossible;
-
-        public List<Square> CanCastle(Piece rook)
-        {
-            var king = board.GetKingByColor(rook.Color);
-            var squares = new List<Square>();
-            if (rook.IsFirstMove && king.IsFirstMove)
-            {
-                var clone = board.Clone() as Board;
-                var dir = king.ChooseRightDirection(rook.Point);
-                var allMoves = king.Point.AllMovesWithinDirection(rook.Point, dir).Take(2);
-                foreach (var move in allMoves)
-                {
-                    var end = clone.Squares.FirstOrDefault(x => x.Point.Equals(move));
-                    clone.ShiftPiece(clone.GetKingByColor(king.Color), end);
-                    if (clone.IsKingChecked(rook.Color) != null) 
-                        return null;
-
-                    squares.Add(board.Squares.FirstOrDefault(x => x.Point.Equals(move)));
-                }
-
-                return squares;
-            }
-
-            return null;
-        }
-
         public void ExecuteCastle(List<Square> square)
         {
             var king = board.GetKingByColor(Color);
-            var clone = board.CheckPredictionBoard(king, square[1]);
+            var clone = board.PredictBoard(king, square[1]);
             if (clone.IsKingChecked(king.Color) == null)
             {
                 board.Squares.FirstOrDefault(x => x.Point.Equals(king.Point)).Piece = null;
                 square[1].Piece = king;
-            }            
+            }
         }
-
-        public event EventHandler OnPieceRemoved;
 
         public GameOver IsCheckMate()
         {
@@ -138,8 +98,8 @@ namespace Library
             var enemyPiece = board.IsKingChecked(Color);
             var moves = board.CalcPossibleMoves(king);
             if (enemyPiece != null)
-            {                
-                var enemyPieces = board.GetAllPiecesByColor(Color).Where(x => !(x is King));                
+            {
+                var enemyPieces = board.GetAllPiecesByColor(Color).Where(x => !(x is King));
 
                 //Can be blocked?
                 foreach (var piece in enemyPieces)
@@ -149,7 +109,7 @@ namespace Library
                     {
                         var square = board.Squares.FirstOrDefault(x => x.Point.Equals(end));
                         if (piece.CanMoveWithoutColliding(square, board))
-                                return GameOver.None;
+                            return GameOver.None;
                     }
                 }
 
@@ -162,21 +122,11 @@ namespace Library
             else
             {
                 foreach (var piece in board.GetAllPiecesByColor(Color))
-                {
                     if (board.CalcPossibleMoves(piece).Count != 0)
                         return GameOver.None;
-                }
 
                 return GameOver.Stalemate;
             }
-        }
-
-        public void PossibleMoves(Piece piece)
-        {
-            var all = board.CalcPossibleMoves(piece);
-            foreach (var square in all)
-                if (ShowPossibleMoves)
-                    square.IsPossibileSquare = true;
         }
     }
 }

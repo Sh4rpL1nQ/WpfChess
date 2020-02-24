@@ -2,6 +2,6 @@
 <ApplicationSettings>
   <Switch1>Start_White</Switch1>
   <Switch2>Start_Black</Switch2>
-  <Priority>CastleTestBottom</Priority>
+  <Priority>PromotionTest</Priority>
   <PlayerTimeInMinutes>5</PlayerTimeInMinutes>
 </ApplicationSettings>

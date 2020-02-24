@@ -1,16 +1,14 @@
 ﻿using Library;
 using Library.Pieces;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace Chess.ViewModels
 {
     public class PlayerViewModel : PropertyChangedBase
-    {        
+    {
         private TimeSpan startingTime;
         private bool piecesAreSelectable;
         private Piece selectedPromotion;
@@ -40,8 +38,8 @@ namespace Chess.ViewModels
         }
 
         public string TimeRemaining
-        { 
-            get { return timeRemaining; } 
+        {
+            get { return timeRemaining; }
             set { RaisePropertyChanged(ref timeRemaining, value); }
         }
 
@@ -74,9 +72,9 @@ namespace Chess.ViewModels
             Player.IsMyTurn = false;
         }
 
-        public void StartTimer() 
-        { 
-            timer.Start(); 
+        public void StartTimer()
+        {
+            timer.Start();
         }
 
         public void StopTimer()
@@ -98,28 +96,36 @@ namespace Chess.ViewModels
         public bool PiecesAreSelectable
         {
             get { return piecesAreSelectable; }
-            set 
-            { 
+            set
+            {
                 RaisePropertyChanged(ref piecesAreSelectable, value);
                 if (piecesAreSelectable)
+                {
                     StopTimer();
+                }
             }
         }
 
         public Piece ReceivingPiece
         {
             get { return selectedPromotion; }
-            set 
+            set
             {
                 RaisePropertyChanged(ref selectedPromotion, value);
                 if (selectedPromotion != null)
+                {
                     PiecesAreSelectable = true;
+                }
             }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (startingTime == TimeSpan.Zero) TimeIsOver?.Invoke(Player, new GameOverEventArgs(GameOver.Time));
+            if (startingTime == TimeSpan.Zero)
+            {
+                TimeIsOver?.Invoke(Player, new GameOverEventArgs(GameOver.Time));
+            }
+
             startingTime = startingTime.Add(TimeSpan.FromSeconds(-1));
             TimeRemaining = startingTime.ToString(@"mm\:ss");
             Date = DateTime.Now.ToShortDateString();

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
 namespace Chess
@@ -22,7 +20,9 @@ namespace Chess
         public ActionCommand(Action<object> action, Predicate<object> predicate)
         {
             if (action == null)
+            {
                 throw new ArgumentNullException(nameof(action));
+            }
 
             this.Action = action;
             this.Predicate = predicate;
@@ -37,7 +37,9 @@ namespace Chess
         public bool CanExecute(object parameter)
         {
             if (Predicate == null)
+            {
                 return true;
+            }
 
             return Predicate(parameter);
         }

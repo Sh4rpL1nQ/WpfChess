@@ -1,9 +1,5 @@
 ﻿using Library;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace LibraryTest
 {
@@ -48,6 +44,16 @@ namespace LibraryTest
             var erg = start.AllMovesWithinDirection(end, dir);
             var res = erg.Count == 2;
             Assert.IsTrue(res);
+        }
+
+        [Test]
+        public void PointOperatorPlus()
+        {
+            Point point1 = new Point(4, 2);
+            Point point2 = new Point(-1, 1);
+            Point result = new Point(3, 3);
+
+            Assert.AreEqual(point1 + point2, result);
         }
     }
 }

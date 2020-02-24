@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Windows.Input;
-using Library;
+﻿using Library;
 using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
 
 namespace Chess.ViewModels
 {
@@ -15,7 +11,7 @@ namespace Chess.ViewModels
     {
         #region Private Fields
         private GameOverViewModel gameOverModel;
-        private ApplicationSettings settings;        
+        private ApplicationSettings settings;
         private Square selectedSquare;
         private string settingsPath = DirectoryInfos.GetPath("Settings.xml");
         #endregion
@@ -28,10 +24,12 @@ namespace Chess.ViewModels
             Chess = new Game(settings);
 
             Chess.Board.OnInitiatePawnPromotion += Board_OnInitiatePawnPromotion;
+            Chess.Board.OnCastlePossible += Board_OnCastlePossible;
+            Chess.Board.OnPieceCaptured += Board_OnPieceCaptured;
 
             PlayerModel1 = new PlayerViewModel(Chess.Board, Color.White, settings.PlayerTimeInMinutes);
             PlayerModel2 = new PlayerViewModel(Chess.Board, Color.Black, settings.PlayerTimeInMinutes);
-            PlayerModel1.Player.UserName = "Player1";           
+            PlayerModel1.Player.UserName = "Player1";
             PlayerModel2.Player.UserName = "Player2";
 
             PlayerModel1.Player.OnGameOver += Player_OnGameOver;
@@ -39,13 +37,7 @@ namespace Chess.ViewModels
             PlayerModel1.TimeIsOver += Player_OnGameOver;
             PlayerModel2.TimeIsOver += Player_OnGameOver;
 
-            PlayerModel1.Player.OnPieceRemoved += Player_OnPieceRemoved;     
-            PlayerModel2.Player.OnPieceRemoved += Player_OnPieceRemoved;
-
-            PlayerModel1.Player.OnCastlePossible += Player_OnCastlePossible;
-            PlayerModel2.Player.OnCastlePossible += Player_OnCastlePossible;
-
-            PlayerModel1.OnPromotionSelected += PlayerModel_OnPromotionSelected; 
+            PlayerModel1.OnPromotionSelected += PlayerModel_OnPromotionSelected;
             PlayerModel2.OnPromotionSelected += PlayerModel_OnPromotionSelected;
 
             ImportTxtCommand = new ActionCommand(ImportTxtAction);
@@ -90,6 +82,18 @@ namespace Chess.ViewModels
             PlayerAtTurn.ReceivingPiece = sender as Piece;
         }
 
+        private void Board_OnPieceCaptured(object sender, EventArgs e)
+        {
+            PlayerAtWait.Player.LostPieces.Add(sender as Piece);
+        }
+
+        private void Board_OnCastlePossible(object sender, EventArgs e)
+        {
+            var res = Message.StartBox(Level.Question, "Do you want to castle?", "Castle possible");
+            if (res == System.Windows.MessageBoxResult.Yes)
+                PlayerAtTurn.Player.ExecuteCastle(sender as List<Square>);
+        }
+
         private void Player_OnGameOver(object sender, EventArgs e)
         {
             var looser = sender as Player;
@@ -98,18 +102,6 @@ namespace Chess.ViewModels
             PlayerModel1.StopTimer();
             PlayerModel2.StopTimer();
             GameOverModel.OnRetry += GameOverModel_OnRetry;
-        }
-
-        private void Player_OnPieceRemoved(object sender, EventArgs e)
-        {
-            PlayerAtWait.Player.LostPieces.Add(sender as Piece);
-        }
-
-        private void Player_OnCastlePossible(object sender, EventArgs e)
-        {
-            var res = Message.StartBox(Level.Question, "Do you want to castle?", "Castle possible");
-            if (res == System.Windows.MessageBoxResult.Yes)
-                PlayerAtTurn.Player.ExecuteCastle(sender as List<Square>);
         }
 
         private void PlayerModel_OnPromotionSelected(object sender, EventArgs e)
@@ -134,7 +126,7 @@ namespace Chess.ViewModels
         {
             var square = (sender as Square);
 
-            if (selectedSquare != null && !square.Point.Equals(selectedSquare.Point))
+            if (selectedSquare != null && !square.Point.Equals(selectedSquare.Point) && square.Piece?.Color != selectedSquare.Color)
             {
                 if (PlayerAtTurn.Player.Move(selectedSquare.Piece, square))
                     if (PlayerAtTurn.ReceivingPiece == null)
@@ -153,9 +145,7 @@ namespace Chess.ViewModels
             {
                 square.IsSelected = true;
                 selectedSquare = square;
-
-                if (PlayerAtTurn.Player.ShowPossibleMoves)
-                    PlayerAtTurn.Player.PossibleMoves(selectedSquare.Piece);
+                Chess.Board.ShowPossibleMoves(selectedSquare.Piece);
             }
         }
 
@@ -168,8 +158,8 @@ namespace Chess.ViewModels
             if (dialog.ShowDialog().Value)
             {
                 Board board = null;
-                try 
-                { 
+                try
+                {
                     board = Serializer.ImportFromTxt(dialog.FileName);
                     Chess.Reset(board);
                     PlayerModel1.Reset();
@@ -177,10 +167,10 @@ namespace Chess.ViewModels
                     SetTurnedPlayer();
                     Message.StartBox(Level.Info, "Your board has successfully been imported and is ready to use", "Export Successful");
                 }
-                catch (Exception e ) 
-                { 
-                    Message.StartBox(Level.Error, e.Message, "Import Error"); 
-                    return; 
+                catch (Exception e)
+                {
+                    Message.StartBox(Level.Error, e.Message, "Import Error");
+                    return;
                 }
             }
         }
@@ -194,22 +184,19 @@ namespace Chess.ViewModels
             {
                 try
                 {
-                    
+                    Board board = Serializer.FromXml<Board>(dialog.FileName);
+                    board.Squares = board.Squares.Skip(64).ToObservableCollection();
+                    Chess.Reset(board);
+                    PlayerModel1.Reset();
+                    PlayerModel2.Reset();
+                    SetTurnedPlayer();
+                    Message.StartBox(Level.Info, "Your board has successfully been imported and is ready to use", "Export Successful");
                 }
                 catch (Exception e)
                 {
                     Message.StartBox(Level.Error, e.Message, "Import Error");
                     return;
                 }
-
-                Board board = Serializer.FromXml<Board>(dialog.FileName);
-                board.Squares = board.Squares.Skip(64).ToObservableCollection();
-                Chess.Reset(board);
-                PlayerModel1.Reset();
-                PlayerModel2.Reset();
-                SetTurnedPlayer();
-                Message.StartBox(Level.Info, "Your board has successfully been imported and is ready to use", "Export Successful");
-
             }
         }
 

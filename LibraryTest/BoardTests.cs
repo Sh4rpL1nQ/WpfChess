@@ -1,10 +1,7 @@
 ﻿using Library;
 using Library.Pieces;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace LibraryTest
 {
@@ -15,7 +12,7 @@ namespace LibraryTest
         [SetUp]
         public void Setup()
         {
-            board = new Board();           
+            board = new Board();
         }
 
         [Test]
@@ -34,7 +31,7 @@ namespace LibraryTest
         [Test]
         public void MakeBoardTest()
         {
-            
+            Board board = new Board();
         }
     }
 }

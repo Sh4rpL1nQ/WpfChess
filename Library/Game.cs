@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Library
+﻿namespace Library
 {
     public class Game
     {
-        private ApplicationSettings settings;       
+        private ApplicationSettings settings;
+
 
         public Board Board { get; set; }
 
@@ -32,7 +29,7 @@ namespace Library
             if (Board.TopColor == Color.White || init)
                 GenerateBoard(settings.BoardXmlPathSwitch1);
             else
-                GenerateBoard(settings.BoardXmlPathSwitch2);    
+                GenerateBoard(settings.BoardXmlPathSwitch2);
         }
 
         public void Reset(Board board)
@@ -49,7 +46,7 @@ namespace Library
 
         private void GenerateBoard(string path)
         {
-            var board = Serializer.ImportFromTxt(settings.BoardXmlPathSwitch2) as Board;
+            var board = Serializer.ImportFromTxt(path) as Board;
             FillBoard(board);
         }
     }

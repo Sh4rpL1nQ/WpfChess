@@ -1,9 +1,6 @@
 ﻿using Library.Pieces;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace Library
@@ -49,22 +46,23 @@ namespace Library
         private bool CheckCollision(Square end, Board board)
         {
             var dir = ChooseRightDirection(end.Point);
-            if (dir == null) return false;
+            if (dir == null)
+                return false;
 
             if (!(this is Pawn))
             {
-                if (end.Piece != null && Color.Equals(end.Piece.Color)) 
+                if (end.Piece != null && Color.Equals(end.Piece.Color))
                     return true;
 
-                if (board.IsPieceBlocking(this, end, dir)) 
+                if (board.IsPieceBlocking(this, end, dir))
                     return true;
             }
             else
             {
-                if (end.Piece != null && dir.PosX == 0) 
+                if (end.Piece != null && dir.PosX == 0)
                     return true;
 
-                if (end.Piece != null && Color.Equals(end.Piece.Color)) 
+                if (end.Piece != null && Color.Equals(end.Piece.Color))
                     return true;
             }
 
@@ -82,10 +80,8 @@ namespace Library
         public Point ChooseRightDirection(Point end)
         {
             foreach (var dir in Directions)
-            {
                 if (Point.IsInDirection(end, dir))
                     return dir;
-            }
 
             return null;
         }

@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Library
@@ -43,7 +41,7 @@ namespace Library
                     fs = new FileStream(fullPath, mode, access);
                     return fs;
                 }
-                catch (IOException e)
+                catch (IOException)
                 {
                     if (fs != null)
                         fs.Dispose();
@@ -138,18 +136,23 @@ namespace Library
                         {
                             if (array[i] == 1)
                             {
-                                if (board.Squares[innerCounter + i].Piece == null) throw new Exception("color was set, but there's no piece: reason txt second matrix");
+                                if (board.Squares[innerCounter + i].Piece == null)
+                                    throw new Exception("color was set, but there's no piece: reason txt second matrix");
+
                                 board.Squares[innerCounter + i].Piece.Color = board.TopColor;
                                 board.Squares[innerCounter + i].Piece.PartOfTopBoard = true;
                             }
                             else if (array[i] == 2)
                             {
-                                if (board.Squares[innerCounter + i].Piece == null) throw new Exception("color was set, but there's no piece: reason txt second matrix");
+                                if (board.Squares[innerCounter + i].Piece == null)
+                                    throw new Exception("color was set, but there's no piece: reason txt second matrix");
+
                                 board.Squares[innerCounter + i].Piece.Color = board.GetOtherColor(board.TopColor);
                                 board.Squares[innerCounter + i].Piece.PartOfTopBoard = false;
                             }
                             else
-                                if (board.Squares[innerCounter + i].Piece != null) throw new Exception("color wasn't set, but there's a piece: reason txt second matrix");
+                                if (board.Squares[innerCounter + i].Piece != null)
+                                    throw new Exception("color wasn't set, but there's a piece: reason txt second matrix");                           
                         }
 
                         innerCounter += Board.BoardSize;

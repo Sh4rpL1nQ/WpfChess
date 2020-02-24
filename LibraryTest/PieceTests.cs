@@ -1,9 +1,6 @@
 ﻿using Library;
 using Library.Pieces;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LibraryTest
 {

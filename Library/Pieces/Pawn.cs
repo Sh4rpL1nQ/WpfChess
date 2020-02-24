@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Library.Pieces
 {
@@ -23,39 +20,41 @@ namespace Library.Pieces
         }
 
         public override bool PartOfTopBoard
-        { 
+        {
             get { return partOfTopBoard; }
             set
             {
                 partOfTopBoard = value;
                 if (partOfTopBoard)
-                Directions = new List<Point>()
+                {
+                    Directions = new List<Point>()
                 {
                     new Point { PosX = 1, PosY = 1 },
                     new Point { PosX = -1, PosY = 1 },
                     new Point { PosX = 0, PosY = 1 },
                 };
+                }
             }
         }
 
         public override Color Color
         {
             get { return color; }
-            set 
-            { 
-                color = value;
-                if (Color == Color.White)
+            set
+            {
+                if ((color = value) == Color.White)
                     Image = @"Images\Pawn_W.png";
             }
         }
 
-        public override int Weight => 10;
+        public override int Weight => 100;
 
         public override bool CanBeMovedToSquare(Square end)
         {
             var dir = ChooseRightDirection(end.Point);
 
-            if (dir == null) return false;
+            if (dir == null)
+                return false;
 
             if (dir.PosX != 0 && Point.GoToDirection(dir).Equals(end.Point) && end.Piece != null)
                 return true;

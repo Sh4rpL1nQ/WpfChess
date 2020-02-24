@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Library.Pieces
 {
@@ -30,13 +28,12 @@ namespace Library.Pieces
             get { return color; }
             set
             {
-                color = value;
-                if (Color == Color.White)
+                if ((color = value) == Color.White)
                     Image = @"Images\Queen_W.png";
             }
         }
 
-        public override int Weight => 90;
+        public override int Weight => 1000;
 
         public override bool CanBeMovedToSquare(Square end)
         {

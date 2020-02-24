@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Library.Pieces
 {
@@ -11,8 +8,8 @@ namespace Library.Pieces
 
         public King()
         {
-            Directions = new List<Point> 
-            { 
+            Directions = new List<Point>
+            {
                 new Point { PosX = 1, PosY = -1 },
                 new Point { PosX = 1, PosY = 1 },
                 new Point { PosX = 1, PosY = 0 },
@@ -32,19 +29,19 @@ namespace Library.Pieces
             get { return color; }
             set
             {
-                color = value;
-                if (Color == Color.White)
+                if ((color = value) == Color.White)
                     Image = @"Images\King_W.png";
             }
         }
 
-        public override int Weight => 999;
+        public override int Weight => 0;
 
         public override bool CanBeMovedToSquare(Square end)
         {
             var dir = ChooseRightDirection(end.Point);
 
-            if (dir == null) return false;
+            if (dir == null) 
+                return false;
 
             var point = Point.GoToDirection(dir);
 

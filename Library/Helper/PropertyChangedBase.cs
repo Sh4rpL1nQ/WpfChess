@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Library
 {
@@ -17,7 +14,9 @@ namespace Library
 
         public bool RaisePropertyChanged<T>(ref T member, T val, [CallerMemberName] string propertyName = null)
         {
-            if (Equals(member, val)) return false;
+            if (Equals(member, val))
+                return false;
+
             member = val;
             RaisePropertyChanged(propertyName);
             return true;

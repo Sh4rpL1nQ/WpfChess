@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 
 namespace Library
 {
@@ -12,12 +10,15 @@ namespace Library
     {
         private Color topColor;
         public static int BoardSize = 8;
+        public List<Move> PossibleMoves { get; set; }
 
         public ObservableCollection<Square> Squares { get; set; }
 
         public Board()
-        {            
+        {
             MakeBoard();
+
+            PossibleMoves = new List<Move>();
         }
 
         private void MakeBoard()
@@ -35,6 +36,13 @@ namespace Library
                 }
             }
         }
+
+        public List<Square> CenterSquares => Squares.Where(x =>
+            (x.Point.PosY == 3 && x.Point.PosX == 3) ||
+            (x.Point.PosY == 3 && x.Point.PosX == 4) ||
+            (x.Point.PosY == 4 && x.Point.PosX == 4) ||
+            (x.Point.PosY == 4 && x.Point.PosX == 3)
+        ).ToList();
 
         public Color TopColor
         {
@@ -54,8 +62,8 @@ namespace Library
                     var dir = enemyPiece.ChooseRightDirection(playerKingSquare.Point);
                     if (!IsPieceBlocking(enemyPiece, playerKingSquare, dir))
                         return enemyPiece;
-                }                   
-            }               
+                }
+            }
 
             return null;
         }
@@ -72,26 +80,6 @@ namespace Library
 
             return false;
         }
-
-        public Piece ShiftPiece(Piece piece, Square end)
-        {
-            var startPiece = piece.Clone() as Piece;
-            var endPiece = Squares.FirstOrDefault(x => x.Point.Equals(end.Point))?.Piece;
-            var saveEndPiece = endPiece?.Clone() as Piece;
-
-            Squares.FirstOrDefault(x => x.Point.Equals(end.Point)).Piece = Squares.FirstOrDefault(x => x.Point.Equals(piece.Point)).Piece;
-            Squares.FirstOrDefault(x => x.Point.Equals(startPiece.Point)).Piece = null;
-
-            return saveEndPiece;
-        }
-
-        public void CheckPiecePromotable(Piece piece)
-        {
-            if ((piece is Pawn) && (piece.Point.PosY == 0 || piece.Point.PosY == 7))
-                OnInitiatePawnPromotion?.Invoke(piece, new EventArgs());
-        }
-
-        public event EventHandler OnInitiatePawnPromotion;
 
         public Color GetOtherColor(Color color)
         {
@@ -120,16 +108,38 @@ namespace Library
             return pieces;
         }
 
-        public Board CheckPredictionBoard(Piece piece, Square end)
+        public Board PredictBoard(Piece piece, Square end)
         {
             var clone = Clone() as Board;
             clone.ShiftPiece(piece, end);
             return clone;
         }
 
-        public List<Square> CalcPossibleMoves(Piece piece)
+        public Piece ShiftPiece(Piece piece, Square end)
         {
-            var res = new List<Square>();
+            var startPiece = piece.Clone() as Piece;
+            var endPiece = Squares.FirstOrDefault(x => x.Point.Equals(end.Point))?.Piece;
+            var saveEndPiece = endPiece?.Clone() as Piece;
+
+            Squares.FirstOrDefault(x => x.Point.Equals(end.Point)).Piece = Squares.FirstOrDefault(x => x.Point.Equals(piece.Point)).Piece;
+            Squares.FirstOrDefault(x => x.Point.Equals(startPiece.Point)).Piece = null;
+
+            return saveEndPiece;
+        }
+
+        public void ShowPossibleMoves(Piece piece)
+        {
+            foreach (var move in CalcPossibleMoves(piece))
+            {
+                move.End.IsPossibileSquare = true;
+                PossibleMoves.Add(move);
+            }
+
+        }
+
+        public List<Move> CalcPossibleMoves(Piece piece)
+        {
+            var res = new List<Move>();
             foreach (var dir in piece.Directions)
             {
                 var allMoves = piece.Point.AllMovesWithinDirection(dir);
@@ -138,15 +148,43 @@ namespace Library
                     var square = Squares.FirstOrDefault(x => x.Point.Equals(end));
                     if (piece.CanMoveWithoutColliding(square, this))
                     {
-                        var clonedBoard = CheckPredictionBoard(piece, square);
+                        var clonedBoard = PredictBoard(piece, square);
                         if (clonedBoard.IsKingChecked(piece.Color) == null)
-                            res.Add(square);
+                        {
+                            var move = new Move(this, piece, square);
+                            move.OnCastlePossible += Move_OnCastlePossible;
+                            move.OnInitiatePawnPromotion += Move_OnInitiatePawnPromotion;
+                            move.OnPieceCaptured += Move_OnPieceCaptured;
+                            res.Add(move);
+                        }
                     }
                 }
             }
 
             return res;
         }
+
+        #region Events
+        public event EventHandler OnCastlePossible;
+        public event EventHandler OnInitiatePawnPromotion;
+        public event EventHandler OnPieceCaptured;
+
+        private void Move_OnPieceCaptured(object sender, EventArgs e)
+        {
+            OnPieceCaptured?.Invoke(sender, e);
+        }
+
+        private void Move_OnInitiatePawnPromotion(object sender, EventArgs e)
+        {
+            OnInitiatePawnPromotion?.Invoke(sender, e);
+        }
+
+        private void Move_OnCastlePossible(object sender, EventArgs e)
+        {
+            OnCastlePossible?.Invoke(sender, e);
+        }
+
+        #endregion
 
         public object Clone()
         {

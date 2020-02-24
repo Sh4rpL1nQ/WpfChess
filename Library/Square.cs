@@ -1,7 +1,5 @@
 ﻿using Library.Pieces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace Library
@@ -17,9 +15,9 @@ namespace Library
         public Point Point
         {
             get { return point; }
-            set 
-            { 
-                point = value; 
+            set
+            {
+                point = value;
                 if (Piece != null)
                     Piece.Point = new Point(point.PosX, point.PosY);
             }
@@ -33,8 +31,8 @@ namespace Library
 
         [XmlIgnore]
         public bool IsPossibileSquare
-        { 
-            get { return isPossibileSquare; } 
+        {
+            get { return isPossibileSquare; }
             set { RaisePropertyChanged(ref isPossibileSquare, value); }
         }
 
@@ -47,7 +45,7 @@ namespace Library
         public Piece Piece
         {
             get { return piece; }
-            set 
+            set
             {
                 RaisePropertyChanged(ref piece, value);
                 if (Point != null && piece != null)
@@ -77,6 +75,14 @@ namespace Library
                 Piece = Piece?.Clone() as Piece,
                 Point = Point.Clone() as Point
             };
+        }
+
+        public override string ToString()
+        {
+            if (Piece != null)
+                return Piece.GetType().Name + Point.ToString();
+            else
+                return Point.ToString();
         }
     }
 

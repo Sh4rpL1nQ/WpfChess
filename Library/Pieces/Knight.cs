@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Library.Pieces
 {
@@ -30,19 +28,19 @@ namespace Library.Pieces
             get { return color; }
             set
             {
-                color = value;
-                if (Color == Color.White)
+                if ((color = value) == Color.White)
                     Image = @"Images\Knight_W.png";
             }
         }
 
-        public override int Weight => 30;
+        public override int Weight => 300;
 
         public override bool CanBeMovedToSquare(Square end)
         {
             var dir = ChooseRightDirection(end.Point);
 
-            if (dir == null) return false;
+            if (dir == null)
+                return false;
 
             var point = Point.GoToDirection(dir);
 
