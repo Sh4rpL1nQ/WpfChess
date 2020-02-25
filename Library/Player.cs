@@ -90,6 +90,8 @@ namespace Library
                 board.Squares.FirstOrDefault(x => x.Point.Equals(king.Point)).Piece = null;
                 square[1].Piece = king;
             }
+
+            king.IsFirstMove = false;
         }
 
         public GameOver IsCheckMate()

@@ -98,6 +98,12 @@ namespace Library
             return GetAllPieces().Where(x => x?.Color == color).ToList();
         }
 
+        public List<Piece> GetRookNearKing(Piece king)
+        {
+            var rooks = GetAllPiecesByColor(king.Color).Where(x => x is Rook);
+            return rooks.ToList();
+        }
+
         public List<Piece> GetAllPieces()
         {
             var pieces = new List<Piece>();
@@ -151,8 +157,16 @@ namespace Library
                         var clonedBoard = PredictBoard(piece, square);
                         if (clonedBoard.IsKingChecked(piece.Color) == null)
                         {
+                            var add = CanCastle(piece);
+                            foreach (var castle in add)
+                            {
+                                var cMove = new Castle(this, piece, castle[0], castle[1]);
+                                cMove.OnInitiatePawnPromotion += Move_OnInitiatePawnPromotion;
+                                cMove.OnPieceCaptured += Move_OnPieceCaptured;
+                                res.Add(cMove);
+                            }
+
                             var move = new Move(this, piece, square);
-                            move.OnCastlePossible += Move_OnCastlePossible;
                             move.OnInitiatePawnPromotion += Move_OnInitiatePawnPromotion;
                             move.OnPieceCaptured += Move_OnPieceCaptured;
                             res.Add(move);
@@ -164,8 +178,38 @@ namespace Library
             return res;
         }
 
+        public List<Square[]> CanCastle(Piece start)
+        {
+            List<Square[]> square = new List<Square[]>();
+
+            if (!(start is King))
+                return square;
+
+            var rooks = GetRookNearKing(start);            
+            foreach (var rook in rooks)
+            {
+                if (start.IsFirstMove && rook.IsFirstMove)
+                {
+                    var clone = Clone() as Board;
+                    var dir = start.ChooseRightDirection(rook.Point);
+                    var allMoves = start.Point.AllMovesWithinDirection(rook.Point, dir).Take(2);
+                    Square s = null;
+                    foreach (var move in allMoves)
+                    {
+                        var end = clone.Squares.FirstOrDefault(x => x.Point.Equals(move));
+                        clone.ShiftPiece(clone.GetKingByColor(start.Color), end);
+                        if (clone.IsKingChecked(start.Color) != null)
+                            return square;
+                    }
+
+                    square.Add(new Square[] { Squares.FirstOrDefault(x => x.Point.Equals(allMoves.ElementAt(1))), Squares.FirstOrDefault(x => x.Point.Equals(rook.Point)) });                    
+                }
+            }            
+
+            return square;
+        }
+
         #region Events
-        public event EventHandler OnCastlePossible;
         public event EventHandler OnInitiatePawnPromotion;
         public event EventHandler OnPieceCaptured;
 
@@ -177,11 +221,6 @@ namespace Library
         private void Move_OnInitiatePawnPromotion(object sender, EventArgs e)
         {
             OnInitiatePawnPromotion?.Invoke(sender, e);
-        }
-
-        private void Move_OnCastlePossible(object sender, EventArgs e)
-        {
-            OnCastlePossible?.Invoke(sender, e);
         }
 
         #endregion

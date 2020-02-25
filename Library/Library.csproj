@@ -12,6 +12,9 @@
     <None Update="Txt\CastleTestBottom.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Txt\CastleTestBothSides.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Txt\CastleTestTop.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

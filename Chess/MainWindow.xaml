@@ -130,7 +130,7 @@
                                                     <Style>
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Color, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Value="White">
-                                                                <Setter Property="Grid.Background" Value="#FFC39F7B"></Setter>
+                                                                <Setter Property="Grid.Background" Value="#FFE2C5A8"></Setter>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding Color, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Value="Black">
                                                                 <Setter Property="Grid.Background" Value="#FF765739"></Setter>

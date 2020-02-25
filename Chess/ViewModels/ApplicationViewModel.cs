@@ -24,7 +24,6 @@ namespace Chess.ViewModels
             Chess = new Game(settings);
 
             Chess.Board.OnInitiatePawnPromotion += Board_OnInitiatePawnPromotion;
-            Chess.Board.OnCastlePossible += Board_OnCastlePossible;
             Chess.Board.OnPieceCaptured += Board_OnPieceCaptured;
 
             PlayerModel1 = new PlayerViewModel(Chess.Board, Color.White, settings.PlayerTimeInMinutes);
@@ -85,13 +84,6 @@ namespace Chess.ViewModels
         private void Board_OnPieceCaptured(object sender, EventArgs e)
         {
             PlayerAtWait.Player.LostPieces.Add(sender as Piece);
-        }
-
-        private void Board_OnCastlePossible(object sender, EventArgs e)
-        {
-            var res = Message.StartBox(Level.Question, "Do you want to castle?", "Castle possible");
-            if (res == System.Windows.MessageBoxResult.Yes)
-                PlayerAtTurn.Player.ExecuteCastle(sender as List<Square>);
         }
 
         private void Player_OnGameOver(object sender, EventArgs e)

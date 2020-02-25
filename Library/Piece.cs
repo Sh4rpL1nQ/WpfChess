@@ -47,24 +47,13 @@ namespace Library
         {
             var dir = ChooseRightDirection(end.Point);
             if (dir == null)
-                return false;
+                return false; 
 
-            if (!(this is Pawn))
-            {
-                if (end.Piece != null && Color.Equals(end.Piece.Color))
-                    return true;
+            if (end.Piece != null && Color.Equals(end.Piece.Color))
+                return true;
 
-                if (board.IsPieceBlocking(this, end, dir))
-                    return true;
-            }
-            else
-            {
-                if (end.Piece != null && dir.PosX == 0)
-                    return true;
-
-                if (end.Piece != null && Color.Equals(end.Piece.Color))
-                    return true;
-            }
+            if (board.IsPieceBlocking(this, end, dir))
+                return true;
 
             return false;
         }
