@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         xmlns:vm="clr-namespace:Chess.ViewModels"
-        xmlns:conv="clr-namespace:Chess.Converter"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200" Background="#2D2D30" ResizeMode="NoResize">
     <Window.DataContext>
@@ -67,7 +66,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Border Background="#654321" BorderBrush="Black" BorderThickness="2" Width="450" Height="450">
+                <Border Background="#FF2C1D0D" BorderBrush="Black" BorderThickness="2" Width="450" Height="450">
                     <Border.Style>
                         <Style>
                             <Setter Property="TextBox.Foreground" Value="White"></Setter>
@@ -131,10 +130,10 @@
                                                     <Style>
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Color, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Value="White">
-                                                                <Setter Property="Grid.Background" Value="#E1C699"></Setter>
+                                                                <Setter Property="Grid.Background" Value="#FFC39F7B"></Setter>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding Color, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Value="Black">
-                                                                <Setter Property="Grid.Background" Value="#0E1111"></Setter>
+                                                                <Setter Property="Grid.Background" Value="#FF765739"></Setter>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
