@@ -166,4 +166,4 @@ When you've saved the current board state into the XML file, you can can continu
 
 ## Authors
 
-* **Dominik Weder** - *Main* - [dodoweder97](https://github.com/dodoweder97)
+* **Dominik Weder** - *Main* - [SharpLinQ](https://github.com/SharpLinQ)
