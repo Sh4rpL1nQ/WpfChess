@@ -118,7 +118,7 @@ namespace Chess.ViewModels
         {
             var square = (sender as Square);
 
-            if (selectedSquare != null && !square.Point.Equals(selectedSquare.Point) && square.Piece?.Color != selectedSquare.Color)
+            if (selectedSquare != null && !square.Point.Equals(selectedSquare.Point) && square.Piece?.Color != selectedSquare.Piece.Color)
             {
                 if (PlayerAtTurn.Player.Move(selectedSquare.Piece, square))
                     if (PlayerAtTurn.ReceivingPiece == null)

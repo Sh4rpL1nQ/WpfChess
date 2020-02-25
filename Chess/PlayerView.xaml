@@ -110,7 +110,7 @@
                     </DockPanel>
                     <DockPanel Grid.Column="1" Margin="10 10 10 10">
                         <Grid DockPanel.Dock="Top" Background="#2D2D30" >
-                            <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="5 5 5 5" HorizontalAlignment="Center">Promote</TextBlock>
+                            <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="0 5 0 5" HorizontalAlignment="Center">Promo</TextBlock>
                         </Grid>
                         <Border BorderBrush="Green" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Border.Style>
@@ -118,7 +118,7 @@
                                     <Setter Property="Border.BorderThickness" Value="0"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding PiecesAreSelectable, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" Value="True">
-                                            <Setter Property="Border.BorderThickness" Value="5"></Setter>
+                                            <Setter Property="Border.Background" Value="Green"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

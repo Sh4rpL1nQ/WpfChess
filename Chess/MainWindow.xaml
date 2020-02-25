@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Chess"
         xmlns:vm="clr-namespace:Chess.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1200" Background="#2D2D30" ResizeMode="NoResize">
+        Title="MainWindow" Height="700" Width="1200" Background="#2D2D30" ResizeMode="CanResize">
     <Window.DataContext>
         <vm:ApplicationViewModel />
     </Window.DataContext>
@@ -55,11 +55,9 @@
     <Grid x:Name="root">
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Options">
-                    <MenuItem Header="Import TXT" Command="{Binding ImportTxtCommand}"></MenuItem>
-                    <MenuItem Header="Import XML" Command="{Binding ImportXmlCommand}"></MenuItem>
-                    <MenuItem Header="Export Board (XML)" Command="{Binding ExportXmlCommand}"></MenuItem>
-                </MenuItem>
+                <MenuItem Header="Import TXT" Command="{Binding ImportTxtCommand}"></MenuItem>
+                <MenuItem Header="Import XML" Command="{Binding ImportXmlCommand}"></MenuItem>
+                <MenuItem Header="Export Board (XML)" Command="{Binding ExportXmlCommand}"></MenuItem>
             </Menu>
             <Grid>
                 <Grid.ColumnDefinitions>

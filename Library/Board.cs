@@ -160,10 +160,12 @@ namespace Library
                             var add = CanCastle(piece);
                             foreach (var castle in add)
                             {
-                                var cMove = new Castle(this, piece, castle[0], castle[1]);
-                                cMove.OnInitiatePawnPromotion += Move_OnInitiatePawnPromotion;
-                                cMove.OnPieceCaptured += Move_OnPieceCaptured;
-                                res.Add(cMove);
+                                if (!piece.CheckCollision(castle[0], this)) {
+                                    var cMove = new Castle(this, piece, castle[0], castle[1]);
+                                    cMove.OnInitiatePawnPromotion += Move_OnInitiatePawnPromotion;
+                                    cMove.OnPieceCaptured += Move_OnPieceCaptured;
+                                    res.Add(cMove);
+                                }                                
                             }
 
                             var move = new Move(this, piece, square);
@@ -193,6 +195,9 @@ namespace Library
                     var clone = Clone() as Board;
                     var dir = start.ChooseRightDirection(rook.Point);
                     var allMoves = start.Point.AllMovesWithinDirection(rook.Point, dir).Take(2);
+                    if (allMoves.Count() < 2)
+                        return square;
+
                     Square s = null;
                     foreach (var move in allMoves)
                     {
@@ -201,7 +206,7 @@ namespace Library
                         if (clone.IsKingChecked(start.Color) != null)
                             return square;
                     }
-
+                   
                     square.Add(new Square[] { Squares.FirstOrDefault(x => x.Point.Equals(allMoves.ElementAt(1))), Squares.FirstOrDefault(x => x.Point.Equals(rook.Point)) });                    
                 }
             }            

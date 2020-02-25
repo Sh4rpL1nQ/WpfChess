@@ -43,7 +43,7 @@ namespace Library
 
         public abstract bool CanBeMovedToSquare(Square square);
 
-        private bool CheckCollision(Square end, Board board)
+        public bool CheckCollision(Square end, Board board)
         {
             var dir = ChooseRightDirection(end.Point);
             if (dir == null)
