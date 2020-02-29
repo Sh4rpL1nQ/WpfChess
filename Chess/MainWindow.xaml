@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Chess"
         xmlns:vm="clr-namespace:Chess.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1200" Background="#2D2D30" ResizeMode="CanResize">
+        Title="MainWindow" Height="704" Width="904" Background="#2D2D30" ResizeMode="CanResize">
     <Window.DataContext>
         <vm:ApplicationViewModel />
     </Window.DataContext>

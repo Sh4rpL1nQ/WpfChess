@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ApplicationSettings>
-  <Switch1>Start_White</Switch1>
+  <Switch1>Start_Black</Switch1>
   <Switch2>Start_Black</Switch2>
   <Priority></Priority>
   <PlayerTimeInMinutes>5</PlayerTimeInMinutes>

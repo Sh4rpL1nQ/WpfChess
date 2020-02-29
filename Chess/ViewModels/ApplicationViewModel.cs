@@ -116,28 +116,34 @@ namespace Chess.ViewModels
         #region Public Methods
         public void SquareAction(object sender)
         {
-            var square = (sender as Square);
-
-            if (selectedSquare != null && !square.Point.Equals(selectedSquare.Point) && square.Piece?.Color != selectedSquare.Piece.Color)
+            try
             {
-                if (PlayerAtTurn.Player.Move(selectedSquare.Piece, square))
-                    if (PlayerAtTurn.ReceivingPiece == null)
-                        ChangeTurns();
+                var square = (sender as Square);
+
+                if (selectedSquare != null && !square.Point.Equals(selectedSquare.Point) && square.Piece?.Color != selectedSquare.Piece.Color)
+                {
+                    if (PlayerAtTurn.Player.Move(selectedSquare.Piece, square))
+                        if (PlayerAtTurn.ReceivingPiece == null)
+                            ChangeTurns();
+
+                    ClearSelections();
+
+                    return;
+                }
+
+                if (square.Piece == null) return;
 
                 ClearSelections();
 
-                return;
-            }
-
-            if (square.Piece == null) return;
-
-            ClearSelections();
-
-            if (square.Piece.Color == PlayerAtTurn.Player.Color)
+                if (square.Piece.Color == PlayerAtTurn.Player.Color)
+                {
+                    square.IsSelected = true;
+                    selectedSquare = square;
+                    Chess.Board.ShowPossibleMoves(selectedSquare.Piece);
+                }
+            } catch (Exception e)
             {
-                square.IsSelected = true;
-                selectedSquare = square;
-                Chess.Board.ShowPossibleMoves(selectedSquare.Piece);
+                Message.StartBox(Level.Error, e.InnerException.ToString(), "");
             }
         }
 

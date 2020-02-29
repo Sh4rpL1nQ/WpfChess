@@ -53,11 +53,11 @@
     <Grid x:Name="root">
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3.8*"></ColumnDefinition>
                 <ColumnDefinition Width="4*"></ColumnDefinition>
-                <ColumnDefinition Width="3.5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid Width="200" Height="200">
-                <Border CornerRadius="200" BorderThickness="5" Background="#2D2D30">
+            <Grid Width="170" Height="170">
+                <Border CornerRadius="170" BorderThickness="5" Background="#2D2D30">
                     <Border.Style>
                         <Style>
                             <Setter Property="Border.BorderBrush" Value="#FFDF66"></Setter>
@@ -69,19 +69,18 @@
                         </Style>
                     </Border.Style>
                     <StackPanel>
-                        <Label FontWeight="Bold" Foreground="#FFDF66" FontSize="25" Margin="0 15 0 0" HorizontalAlignment="Center" Content="{Binding Player.UserName}"></Label>
-                        <StackPanel Background="#2D2D30" Margin="0 5 0 5" Width="170" Height="70">
-                            <Label Content="{Binding TimeRemaining, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" Foreground="#FFDF66" Margin="0 0 0 0" FontSize="45" HorizontalAlignment="Center"></Label>
+                        <Label FontWeight="Bold" Foreground="#FFDF66" FontSize="20" Margin="0 15 0 0" HorizontalAlignment="Center" Content="{Binding Player.UserName}"></Label>
+                        <StackPanel Background="#2D2D30" Margin="0 5 0 5" Width="120">
+                            <Label Content="{Binding TimeRemaining, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" Foreground="#FFDF66" Margin="0 0 0 0" FontSize="40" HorizontalAlignment="Center"></Label>
                         </StackPanel>
-                        <StackPanel Background="#2D2D30" Margin="0 5 0 5" Width="80" Height="30">
-                            <Label Content="{Binding Date, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" Foreground="#FFDF66" Margin="0 4 0 0" FontSize="10" HorizontalAlignment="Center"></Label>
+                        <StackPanel Background="#2D2D30" Margin="0 5 0 5" Width="60">
+                            <Label Content="{Binding Date, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" Foreground="#FFDF66" Margin="0 4 0 0" FontSize="8" HorizontalAlignment="Center"></Label>
                         </StackPanel>
                     </StackPanel>
                 </Border>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid>
@@ -112,7 +111,7 @@
                         <Grid DockPanel.Dock="Top" Background="#2D2D30" >
                             <TextBlock Foreground="#FFDF66" FontWeight="Bold" Margin="0 5 0 5" HorizontalAlignment="Center">Promo</TextBlock>
                         </Grid>
-                        <Border BorderBrush="Green" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border BorderBrush="Green" HorizontalAlignment="Center" VerticalAlignment="Top">
                             <Border.Style>
                                 <Style>
                                     <Setter Property="Border.BorderThickness" Value="0"></Setter>
@@ -140,14 +139,6 @@
                         </Border>
                     </DockPanel>
                 </Grid>
-                <DockPanel Grid.Row="1" Margin="10 10 10 10">
-                    <Grid DockPanel.Dock="Top" Background="#2D2D30" >
-                        <TextBlock FontWeight="Bold" Foreground="#FFDF66" Margin="5 5 5 5" HorizontalAlignment="Center">Settings</TextBlock>
-                    </Grid>
-                    <Grid HorizontalAlignment="Stretch" Background="#2D2D30" VerticalAlignment="Top">
-                        <CheckBox Margin="5 5 5 5" Content="Show possible moves" IsChecked="{Binding Player.ShowPossibleMoves, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
-                    </Grid>
-                </DockPanel>
             </Grid>
         </Grid>
     </Grid>
