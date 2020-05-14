@@ -107,8 +107,8 @@ The type of piece corresponds to an integer value. You can find them inside the 
 | Knight   | 2   |  
 | Bishop  | 3  |
 | Queen  | 4  |
-| King    | 4    | 
-| Pawn    | 5    | 
+| King    | 5    | 
+| Pawn    | 6    | 
 | No piece    | 0    | 
 
 As an example I extracted the matrix of the normal starting board out of the **_Start_White_** with White at the top.
